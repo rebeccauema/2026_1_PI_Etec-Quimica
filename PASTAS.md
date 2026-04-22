@@ -21,9 +21,6 @@ O objetivo é auxiliar na identificação de materiais de laboratório, suas fun
 
 ---
 
-## 🧱 Estrutura do Projeto
-
-O projeto segue o padrão de arquitetura em camadas (similar ao MVC), visando organização, manutenção e escalabilidade.
 
 ### 📂 `app`
 
@@ -148,16 +145,6 @@ O sistema utiliza MySQL para armazenamento de dados.
 * As imagens dos materiais são armazenadas na pasta `resources` e apenas o caminho é salvo no banco.
 * As senhas dos usuários devem ser armazenadas com criptografia.
 * O sistema segue boas práticas de separação de responsabilidades.
-
----
-
-## 🚀 Possíveis Melhorias Futuras
-
-* Ranking global de alunos
-* Exportação de relatórios
-* Versão web do sistema
-* Integração com banco de imagens online
-* Sistema de conquistas (gamificação)
 
 ---
 
