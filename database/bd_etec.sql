@@ -23,10 +23,15 @@ DROP TABLE IF EXISTS `alternativa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `alternativa` (
-  `id_alternativa` int DEFAULT NULL,
-  `correta` tinyint(1) DEFAULT NULL,
-  `id_pergunta` int DEFAULT NULL,
-  `id_imagem` int DEFAULT NULL
+  `id_alternativa` int NOT NULL AUTO_INCREMENT,
+  `correta` tinyint NOT NULL,
+  `id_pergunta` int NOT NULL,
+  `id_imagem` int DEFAULT NULL,
+  PRIMARY KEY (`id_alternativa`),
+  KEY `id_pergunta` (`id_pergunta`),
+  KEY `id_imagem` (`id_imagem`),
+  CONSTRAINT `alternativa_ibfk_1` FOREIGN KEY (`id_pergunta`) REFERENCES `pergunta` (`id_pergunta`),
+  CONSTRAINT `alternativa_ibfk_2` FOREIGN KEY (`id_imagem`) REFERENCES `imagem` (`id_imagem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -47,8 +52,9 @@ DROP TABLE IF EXISTS `imagem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `imagem` (
-  `id_imagem` int DEFAULT NULL,
-  `caminho_imagem` varchar(100) DEFAULT NULL
+  `id_imagem` int NOT NULL AUTO_INCREMENT,
+  `caminho_imagem` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_imagem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,10 +75,13 @@ DROP TABLE IF EXISTS `material`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `material` (
-  `id_material` int DEFAULT NULL,
-  `nome` varchar(100) DEFAULT NULL,
+  `id_material` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
   `descricao` text,
-  `id_imagem` int DEFAULT NULL
+  `id_imagem` int DEFAULT NULL,
+  PRIMARY KEY (`id_material`),
+  KEY `id_imagem` (`id_imagem`),
+  CONSTRAINT `material_ibfk_1` FOREIGN KEY (`id_imagem`) REFERENCES `imagem` (`id_imagem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -93,9 +102,10 @@ DROP TABLE IF EXISTS `nivel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nivel` (
-  `id_nivel` int DEFAULT NULL,
-  `nome` varchar(100) DEFAULT NULL,
-  `descricao` text
+  `id_nivel` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `descricao` text,
+  PRIMARY KEY (`id_nivel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -116,13 +126,22 @@ DROP TABLE IF EXISTS `pergunta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pergunta` (
-  `id_pergunta` int DEFAULT NULL,
-  `texto` text,
-  `feedback_erro` text,
-  `id_tema` int DEFAULT NULL,
-  `id_nivel` int DEFAULT NULL,
+  `id_pergunta` int NOT NULL AUTO_INCREMENT,
+  `texto` text NOT NULL,
+  `feedback_erro` text NOT NULL,
+  `id_tema` int NOT NULL,
+  `id_nivel` int NOT NULL,
   `id_imagem` int DEFAULT NULL,
-  `id_material` int DEFAULT NULL
+  `id_material` int DEFAULT NULL,
+  PRIMARY KEY (`id_pergunta`),
+  KEY `id_tema` (`id_tema`),
+  KEY `id_nivel` (`id_nivel`),
+  KEY `id_imagem` (`id_imagem`),
+  KEY `id_material` (`id_material`),
+  CONSTRAINT `pergunta_ibfk_1` FOREIGN KEY (`id_tema`) REFERENCES `tema` (`id_tema`),
+  CONSTRAINT `pergunta_ibfk_2` FOREIGN KEY (`id_nivel`) REFERENCES `nivel` (`id_nivel`),
+  CONSTRAINT `pergunta_ibfk_3` FOREIGN KEY (`id_imagem`) REFERENCES `imagem` (`id_imagem`),
+  CONSTRAINT `pergunta_ibfk_4` FOREIGN KEY (`id_material`) REFERENCES `material` (`id_material`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -143,9 +162,10 @@ DROP TABLE IF EXISTS `tema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tema` (
-  `id_tema` int DEFAULT NULL,
-  `nome` varchar(100) DEFAULT NULL,
-  `descricao` text
+  `id_tema` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `descricao` text,
+  PRIMARY KEY (`id_tema`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-29 15:29:08
+-- Dump completed on 2026-04-29 16:32:14
