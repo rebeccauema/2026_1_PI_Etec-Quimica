@@ -29,7 +29,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jToggleButtonMostrarSenha = new javax.swing.JToggleButton();
         jLabelMostrarSenha = new javax.swing.JLabel();
         entrar = new javax.swing.JButton();
-        jLabelRedirecionamentoCadastro = new javax.swing.JLabel();
+        jButtonRedirecionamentoCadastro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,9 +120,10 @@ public class TelaLogin extends javax.swing.JFrame {
         entrar.addActionListener(this::entrarActionPerformed);
         jPanelFundoLogin.add(entrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 225, 259, -1));
 
-        jLabelRedirecionamentoCadastro.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabelRedirecionamentoCadastro.setText("Ainda não possui login? Faça o cadastro aqui");
-        jPanelFundoLogin.add(jLabelRedirecionamentoCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
+        jButtonRedirecionamentoCadastro.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jButtonRedirecionamentoCadastro.setText("Ainda não possui login? Faça o cadastro aqui");
+        jButtonRedirecionamentoCadastro.setBorder(null);
+        jPanelFundoLogin.add(jButtonRedirecionamentoCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
         jLayeredPane1.setLayer(jPanelFundoLogin, javax.swing.JLayeredPane.MODAL_LAYER);
         jLayeredPane1.add(jPanelFundoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 70, 340, 320));
@@ -191,11 +192,11 @@ public class TelaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton entrar;
     private javax.swing.JLabel imageIcon;
+    private javax.swing.JButton jButtonRedirecionamentoCadastro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelLogin;
     private javax.swing.JLabel jLabelMostrarSenha;
-    private javax.swing.JLabel jLabelRedirecionamentoCadastro;
     private javax.swing.JLabel jLabelSenha;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanelFundoAzul;
