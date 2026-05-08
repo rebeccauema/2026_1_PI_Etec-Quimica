@@ -97,6 +97,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jPanelFundoLogin.add(entrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 225, 259, -1));
 
         jButtonRedirecionamentoCadastro.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jButtonRedirecionamentoCadastro.setForeground(new java.awt.Color(0, 51, 255));
         jButtonRedirecionamentoCadastro.setText("Ainda não possui login? Faça o cadastro aqui");
         jButtonRedirecionamentoCadastro.setBorder(null);
         jButtonRedirecionamentoCadastro.addActionListener(this::jButtonRedirecionamentoCadastroActionPerformed);
@@ -145,8 +146,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_mostrarSenhaActionPerformed
 
     private void jButtonRedirecionamentoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRedirecionamentoCadastroActionPerformed
-        new TelaCadastro().setVisible(true); // Exibe o que foi criado. Nesse caso, o objetvo TelaCadastro
-        this.dispose(); // Método dispose encerra e destrói uma janela de forma segura 
+        new TelaCadastro().setVisible(true); // Exibe o que foi criado. Nesse caso, o objeto TelaCadastro
+        this.dispose(); // Método dispose encerra e destrói a janela de forma segura 
     }//GEN-LAST:event_jButtonRedirecionamentoCadastroActionPerformed
 
     public static void main(String args[]) {
