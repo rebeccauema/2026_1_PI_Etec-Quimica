@@ -1,5 +1,8 @@
 package br.com.pi_2026_1_etec.view.telas;
 
+import br.com.pi_2026_1_etec.controller.UsuarioService;
+import br.com.pi_2026_1_etec.model.Usuario;
+
 public class TelaCadastro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastro.class.getName());
@@ -18,17 +21,16 @@ public class TelaCadastro extends javax.swing.JFrame {
         jPanelLogin = new javax.swing.JPanel();
         jLabelCadastro = new javax.swing.JLabel();
         jLabelNome = new javax.swing.JLabel();
-        jTextFieldNome = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         jLabelEmail = new javax.swing.JLabel();
-        jTextFieldEmail = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jLabelSenha = new javax.swing.JLabel();
-        jPasswordFieldSenha = new javax.swing.JPasswordField();
+        txtSenha = new javax.swing.JPasswordField();
         jToggleButtonMostrarSenha = new javax.swing.JToggleButton();
         jLabelMostrarSenha = new javax.swing.JLabel();
         jButtonCriarConta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(775, 460));
         setResizable(false);
 
         jLayeredPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -74,20 +76,22 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLabelNome.setText("Nome");
         jPanelLogin.add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
-        jTextFieldNome.setToolTipText("");
-        jPanelLogin.add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 259, -1));
+        txtNome.setToolTipText("");
+        jPanelLogin.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 259, -1));
 
         jLabelEmail.setText("E-mail");
         jPanelLogin.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
-        jTextFieldEmail.setText("exemplo@email.com");
-        jPanelLogin.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 259, -1));
+        txtEmail.setText("exemplo@email.com");
+        jPanelLogin.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 259, -1));
 
         jLabelSenha.setText("Senha");
         jPanelLogin.add(jLabelSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
 
-        jPasswordFieldSenha.setText("jPasswordField1");
-        jPanelLogin.add(jPasswordFieldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 259, -1));
+        txtSenha.setText("jPasswordField1");
+        jPanelLogin.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 259, -1));
+
+        jToggleButtonMostrarSenha.addActionListener(this::jToggleButtonMostrarSenhaActionPerformed);
         jPanelLogin.add(jToggleButtonMostrarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 13, 13));
 
         jLabelMostrarSenha.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
@@ -97,6 +101,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         jButtonCriarConta.setBackground(new java.awt.Color(0, 0, 0));
         jButtonCriarConta.setForeground(new java.awt.Color(255, 255, 255));
         jButtonCriarConta.setText("Criar conta");
+        jButtonCriarConta.addActionListener(this::jButtonCriarContaActionPerformed);
         jPanelLogin.add(jButtonCriarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 259, -1));
 
         jLayeredPane1.setLayer(jPanelLogin, javax.swing.JLayeredPane.MODAL_LAYER);
@@ -116,9 +121,37 @@ public class TelaCadastro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jToggleButtonMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonMostrarSenhaActionPerformed
+        if (jToggleButtonMostrarSenha.isSelected()) {
+        txtSenha.setEchoChar((char) 0); 
+    } else {
+        txtSenha.setEchoChar('•'); 
+    }
+    }//GEN-LAST:event_jToggleButtonMostrarSenhaActionPerformed
+
+    private void jButtonCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarContaActionPerformed
+        String nome = txtNome.getText();
+        String email = txtEmail.getText();
+        String senha = new String(txtSenha.getPassword());
+        
+        Usuario novoUsuario = new Usuario(); 
+        novoUsuario.setNome(nome);
+        novoUsuario.setEmail(email);
+        novoUsuario.setSenha(senha);
+        
+        UsuarioService service = new UsuarioService();
+        boolean sucesso = service.cadastrarUsuario(novoUsuario);
+        
+        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+       
+        if (sucesso) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar.");
+    }
+    }//GEN-LAST:event_jButtonCriarContaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -152,9 +185,9 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelAzul;
     private javax.swing.JPanel jPanelLogin;
     private javax.swing.JPanel jPanelVermelho;
-    private javax.swing.JPasswordField jPasswordFieldSenha;
-    private javax.swing.JTextField jTextFieldEmail;
-    private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JToggleButton jToggleButtonMostrarSenha;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }
