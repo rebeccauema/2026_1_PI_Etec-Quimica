@@ -77,14 +77,10 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabelEmail.setText("E-mail");
         jPanelFundoLogin.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
-
-        jTextFieldEmail.setText("exemplo@email.com");
         jPanelFundoLogin.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 259, -1));
 
         jLabelSenha.setText("Senha");
         jPanelFundoLogin.add(jLabelSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-
-        txtSenha.setText("JpasswordField");
         jPanelFundoLogin.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 259, -1));
 
         mostrarSenha.addActionListener(this::mostrarSenhaActionPerformed);

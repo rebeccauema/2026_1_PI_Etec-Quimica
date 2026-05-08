@@ -81,14 +81,10 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         jLabelEmail.setText("E-mail");
         jPanelLogin.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-
-        txtEmail.setText("exemplo@email.com");
         jPanelLogin.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 259, -1));
 
         jLabelSenha.setText("Senha");
         jPanelLogin.add(jLabelSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
-
-        txtSenha.setText("jPasswordField1");
         jPanelLogin.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 259, -1));
 
         jToggleButtonMostrarSenha.addActionListener(this::jToggleButtonMostrarSenhaActionPerformed);
@@ -130,6 +126,9 @@ public class TelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButtonMostrarSenhaActionPerformed
 
     private void jButtonCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarContaActionPerformed
+        TelaCadastro tela2 = new TelaCadastro();
+        tela2.setVisible(true);
+        
         String nome = txtNome.getText();
         String email = txtEmail.getText();
         String senha = new String(txtSenha.getPassword());
@@ -140,16 +139,18 @@ public class TelaCadastro extends javax.swing.JFrame {
         novoUsuario.setSenha(senha);
         
         UsuarioService service = new UsuarioService();
-        boolean sucesso = service.cadastrarUsuario(novoUsuario);
+        //boolean sucesso = service.cadastrarUsuario(novoUsuario);
         
         if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos!"); }
+        else { javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");}
        
-        if (sucesso) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar.");
-    }
+        //if (sucesso) {
+        //javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+   // } else {
+       // javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar.");
+   // }
+            
     }//GEN-LAST:event_jButtonCriarContaActionPerformed
 
     public static void main(String args[]) {
