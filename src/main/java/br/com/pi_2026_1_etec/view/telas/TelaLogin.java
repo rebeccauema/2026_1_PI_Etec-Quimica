@@ -44,12 +44,12 @@ public class TelaLogin extends javax.swing.JFrame {
             jPanelFundoAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFundoAzulLayout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 258, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelFundoAzulLayout.setVerticalGroup(
             jPanelFundoAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoAzulLayout.createSequentialGroup()
-                .addGap(0, 271, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1))
         );
 
@@ -107,6 +107,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jButtonRedirecionamentoCadastro.setForeground(new java.awt.Color(0, 51, 255));
         jButtonRedirecionamentoCadastro.setText("Ainda não possui login? Faça o cadastro aqui");
         jButtonRedirecionamentoCadastro.setBorder(null);
+        jButtonRedirecionamentoCadastro.setBorderPainted(false);
         jButtonRedirecionamentoCadastro.addActionListener(this::jButtonRedirecionamentoCadastroActionPerformed);
         jPanelFundoLogin.add(jButtonRedirecionamentoCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
