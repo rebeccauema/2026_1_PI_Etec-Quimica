@@ -1,10 +1,10 @@
 package br.com.pi_2026_1_etec.view.telas;
 
-public class TelaInicioProfessores extends javax.swing.JFrame {
+public class TelaMenuProfessores extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaInicioProfessores.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuProfessores.class.getName());
 
-   public TelaInicioProfessores() {
+   public TelaMenuProfessores() {
         initComponents();
         
         jPanelTitulo3.setBackground(new java.awt.Color(7, 92, 110, 15));
@@ -274,7 +274,7 @@ public class TelaInicioProfessores extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaInicioProfessores().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TelaMenuProfessores().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

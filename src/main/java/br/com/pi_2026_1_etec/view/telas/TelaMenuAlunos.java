@@ -1,12 +1,12 @@
 package br.com.pi_2026_1_etec.view.telas;
 
 
-public class TelaNiveis extends javax.swing.JFrame {
+public class TelaMenuAlunos extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaNiveis.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuAlunos.class.getName());
 
     
-    public TelaNiveis() {
+    public TelaMenuAlunos() {
         initComponents();
     }
 
@@ -146,7 +146,7 @@ public class TelaNiveis extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaNiveis().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TelaMenuAlunos().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
