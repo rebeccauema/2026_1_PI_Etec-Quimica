@@ -54,17 +54,16 @@ public class TelaInicioProfessores extends javax.swing.JFrame {
 
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImagensEtec/LogoCPS.png"))); // NOI18N
         jLabelLogo.setToolTipText("");
-        jLabelLogo.setPreferredSize(new java.awt.Dimension(132, 79));
         jPanel1.add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 0, 120, 75));
 
         jLabelTitulo.setBackground(new java.awt.Color(248, 249, 252));
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabelTitulo.setText("Olá, Professor(a) Carlos!");
-        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 18, -1, -1));
+        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         jLabelSubtitulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelSubtitulo.setText("Bem-vindo ao painel de O Grande Desafio da Química.");
-        jPanel1.add(jLabelSubtitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 54, -1, -1));
+        jPanel1.add(jLabelSubtitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         jLabelTitulo2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabelTitulo2.setText("Resumo rápido");
@@ -228,8 +227,6 @@ public class TelaInicioProfessores extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanelTitulo3_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, -1, -1));
-
-        jLabel2.setPreferredSize(new java.awt.Dimension(0, 0));
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 54, -1, -1));
 

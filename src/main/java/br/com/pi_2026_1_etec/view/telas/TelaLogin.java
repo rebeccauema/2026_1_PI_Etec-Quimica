@@ -14,9 +14,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jPanelFundoAzul = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanelFundoVermelho = new javax.swing.JPanel();
+        jPanelFundoBranco = new javax.swing.JPanel();
         jPanelFundoLogin = new javax.swing.JPanel();
         jLabelLogin = new javax.swing.JLabel();
         jLabelEmail = new javax.swing.JLabel();
@@ -27,92 +25,125 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabelMostrarSenha = new javax.swing.JLabel();
         entrar = new javax.swing.JButton();
         jButtonRedirecionamentoCadastro = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPanelFundoAzul = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLayeredPane1.setPreferredSize(new java.awt.Dimension(775, 460));
         jLayeredPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanelFundoAzul.setBackground(new java.awt.Color(7, 92, 110));
-        jPanelFundoAzul.setPreferredSize(new java.awt.Dimension(132, 79));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImagensEtec/LogoCPS.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanelFundoAzulLayout = new javax.swing.GroupLayout(jPanelFundoAzul);
-        jPanelFundoAzul.setLayout(jPanelFundoAzulLayout);
-        jPanelFundoAzulLayout.setHorizontalGroup(
-            jPanelFundoAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFundoAzulLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanelFundoAzulLayout.setVerticalGroup(
-            jPanelFundoAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoAzulLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1))
-        );
-
-        jLayeredPane1.add(jPanelFundoAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 390, 350));
-
-        jPanelFundoVermelho.setBackground(new java.awt.Color(146, 25, 19));
-        jPanelFundoVermelho.setPreferredSize(new java.awt.Dimension(775, 460));
-
-        javax.swing.GroupLayout jPanelFundoVermelhoLayout = new javax.swing.GroupLayout(jPanelFundoVermelho);
-        jPanelFundoVermelho.setLayout(jPanelFundoVermelhoLayout);
-        jPanelFundoVermelhoLayout.setHorizontalGroup(
-            jPanelFundoVermelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
-        );
-        jPanelFundoVermelhoLayout.setVerticalGroup(
-            jPanelFundoVermelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
-        );
-
-        jLayeredPane1.add(jPanelFundoVermelho, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 460));
+        jPanelFundoBranco.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelFundoBranco.setPreferredSize(new java.awt.Dimension(775, 460));
 
         jPanelFundoLogin.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelFundoLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanelFundoLogin.setForeground(new java.awt.Color(255, 255, 255));
         jPanelFundoLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelLogin.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
+        jLabelLogin.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabelLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelLogin.setText("Login");
+        jLabelLogin.setText("Faça seu login");
         jLabelLogin.setAlignmentX(170.0F);
         jLabelLogin.setAlignmentY(160.0F);
-        jPanelFundoLogin.add(jLabelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
+        jPanelFundoLogin.add(jLabelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
 
+        jLabelEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelEmail.setText("E-mail");
-        jPanelFundoLogin.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
-        jPanelFundoLogin.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 259, -1));
+        jPanelFundoLogin.add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+        jPanelFundoLogin.add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 259, -1));
 
+        jLabelSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelSenha.setText("Senha");
-        jPanelFundoLogin.add(jLabelSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-        jPanelFundoLogin.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 259, -1));
+        jPanelFundoLogin.add(jLabelSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+        jPanelFundoLogin.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 259, -1));
 
         mostrarSenha.addActionListener(this::mostrarSenhaActionPerformed);
-        jPanelFundoLogin.add(mostrarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 13, 13));
+        jPanelFundoLogin.add(mostrarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 13, 13));
 
         jLabelMostrarSenha.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabelMostrarSenha.setText("Mostrar senha");
-        jPanelFundoLogin.add(jLabelMostrarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+        jPanelFundoLogin.add(jLabelMostrarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
-        entrar.setBackground(new java.awt.Color(0, 0, 0));
+        entrar.setBackground(new java.awt.Color(7, 92, 110));
+        entrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         entrar.setForeground(new java.awt.Color(255, 255, 255));
         entrar.setText("Entrar");
         entrar.addActionListener(this::entrarActionPerformed);
-        jPanelFundoLogin.add(entrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 225, 259, -1));
+        jPanelFundoLogin.add(entrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 259, -1));
 
         jButtonRedirecionamentoCadastro.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jButtonRedirecionamentoCadastro.setForeground(new java.awt.Color(0, 51, 255));
         jButtonRedirecionamentoCadastro.setText("Ainda não possui login? Faça o cadastro aqui");
         jButtonRedirecionamentoCadastro.setBorder(null);
-        jButtonRedirecionamentoCadastro.setBorderPainted(false);
         jButtonRedirecionamentoCadastro.addActionListener(this::jButtonRedirecionamentoCadastroActionPerformed);
-        jPanelFundoLogin.add(jButtonRedirecionamentoCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
+        jPanelFundoLogin.add(jButtonRedirecionamentoCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, -1));
 
-        jLayeredPane1.setLayer(jPanelFundoLogin, javax.swing.JLayeredPane.MODAL_LAYER);
-        jLayeredPane1.add(jPanelFundoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 70, 340, 320));
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setText("Use suas credenciais para continuar");
+        jPanelFundoLogin.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+
+        jPanelFundoAzul.setBackground(new java.awt.Color(7, 92, 110));
+        jPanelFundoAzul.setPreferredSize(new java.awt.Dimension(132, 79));
+        jPanelFundoAzul.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 180, 220));
+        jLabel3.setText("O GRANDE");
+        jPanelFundoAzul.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("DESAFIO");
+        jPanelFundoAzul.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 180, 220));
+        jLabel5.setText("DA QUÍMICA");
+        jPanelFundoAzul.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Bem-vindo(a)!");
+        jPanelFundoAzul.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Entre para acessar a experiência que transforma");
+        jPanelFundoAzul.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("conhecimento em desafio.");
+        jPanelFundoAzul.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        jPanelFundoAzul.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, -1, -1));
+
+        javax.swing.GroupLayout jPanelFundoBrancoLayout = new javax.swing.GroupLayout(jPanelFundoBranco);
+        jPanelFundoBranco.setLayout(jPanelFundoBrancoLayout);
+        jPanelFundoBrancoLayout.setHorizontalGroup(
+            jPanelFundoBrancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoBrancoLayout.createSequentialGroup()
+                .addComponent(jPanelFundoAzul, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(jPanelFundoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
+        );
+        jPanelFundoBrancoLayout.setVerticalGroup(
+            jPanelFundoBrancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFundoBrancoLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jPanelFundoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelFundoBrancoLayout.createSequentialGroup()
+                .addComponent(jPanelFundoAzul, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jLayeredPane1.add(jPanelFundoBranco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 460));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -184,14 +215,21 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JButton entrar;
     private javax.swing.JButton jButtonRedirecionamentoCadastro;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelLogin;
     private javax.swing.JLabel jLabelMostrarSenha;
     private javax.swing.JLabel jLabelSenha;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanelFundoAzul;
+    private javax.swing.JPanel jPanelFundoBranco;
     private javax.swing.JPanel jPanelFundoLogin;
-    private javax.swing.JPanel jPanelFundoVermelho;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JToggleButton mostrarSenha;
     private javax.swing.JPasswordField txtSenha;

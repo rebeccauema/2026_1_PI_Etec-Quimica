@@ -1,10 +1,10 @@
 package br.com.pi_2026_1_etec.view.telas;
 
-public class TelaInicio extends javax.swing.JFrame {
+public class TelaInicialJogo extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaInicio.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaInicialJogo.class.getName());
 
-    public TelaInicio() {
+    public TelaInicialJogo() {
         initComponents();
     }
 
@@ -95,7 +95,7 @@ public class TelaInicio extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaInicio().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TelaInicialJogo().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
