@@ -1,10 +1,10 @@
 package br.com.pi_2026_1_etec.app;
 
-import br.com.pi_2026_1_etec.view.telas.TelaLogin;
+import br.com.pi_2026_1_etec.view.telas.TelaInicialJogo;
 
 public class main {
     public static void main(String[] args) {
-        TelaLogin tela = new TelaLogin();
+        TelaInicialJogo tela = new TelaInicialJogo();
         tela.setVisible(true);
         
     }

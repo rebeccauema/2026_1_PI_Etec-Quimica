@@ -94,11 +94,10 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
         jPanel2.add(jPanelTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 365, 80));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(146, 25, 19)));
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel6.setForeground(new java.awt.Color(146, 25, 19));
 
         jPanel1.setBackground(new java.awt.Color(146, 25, 19));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(null));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Pergunta");
@@ -144,13 +143,13 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
         jLabel6.setBackground(new java.awt.Color(255, 102, 102));
         jLabel6.setForeground(new java.awt.Color(255, 51, 51));
         jLabel6.setText("Difícil");
-        jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel7.setText("26/05/2026");
 
         jLabel8.setText("14:30");
 
         jButton3.setText("edit");
+        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -173,7 +172,7 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addGap(115, 115, 115)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
@@ -221,9 +220,9 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 5, Short.MAX_VALUE)
+                .addGap(0, 11, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
