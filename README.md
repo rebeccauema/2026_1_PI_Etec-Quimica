@@ -6,4 +6,4 @@
 | Gabriel Medeiros Araujo             | 25.11742-5   | @G4br1el22          | Dev. e Documentação               |
 | Larissa Barbosa Oliveira                | 25.11765-6   | @larringe              | Dev. e Documentação               |
 | Pedro Mattei Spezzotto Silva            | 25.01232-9   | @PedroMattei007      | Dev. e Documentação               |
-| Miguel Ribeiro Dias                   | 25.01482-0   | @------------        | Dev. e Documentação               |
+| Miguel Ribeiro Dias                   | 25.01482-0   | @miguelrdias1| Dev. e Documentação               |
