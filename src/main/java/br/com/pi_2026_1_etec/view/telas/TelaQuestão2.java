@@ -44,28 +44,28 @@ public class TelaQuestão2 extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setText("Pergunta");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(359, 38, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Imagem");
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 78, 600, 130));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 240, 240));
 
         jButton2.setText("Alternativa D");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 290, 90));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 250, 80));
 
         jButton3.setText("Alternativa A");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 290, 90));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 250, 80));
 
         jButton4.setText("Alternativa C");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 290, 90));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 250, 80));
 
         jButton5.setText("Alternativa B");
         jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 290, 90));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 250, 80));
 
         jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 

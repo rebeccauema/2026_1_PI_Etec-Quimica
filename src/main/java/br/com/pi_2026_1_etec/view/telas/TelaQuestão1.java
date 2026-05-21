@@ -48,11 +48,11 @@ public class TelaQuestão1 extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setText("Pergunta");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(359, 38, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel3.setText("Imagem");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 78, 600, 130));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 240, 240));
 
         jButton1.setBackground(new java.awt.Color(7, 92, 110));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -60,7 +60,7 @@ public class TelaQuestão1 extends javax.swing.JFrame {
         jButton1.setText("Alternativa C");
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
         jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 333, 600, 35));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 250, 80));
 
         jButton2.setBackground(new java.awt.Color(7, 92, 110));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -68,7 +68,7 @@ public class TelaQuestão1 extends javax.swing.JFrame {
         jButton2.setText("Alternativa A");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
         jButton2.addActionListener(this::jButton2ActionPerformed);
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 239, 600, 35));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 250, 80));
 
         jButton3.setBackground(new java.awt.Color(7, 92, 110));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -76,7 +76,7 @@ public class TelaQuestão1 extends javax.swing.JFrame {
         jButton3.setText("Alternativa B");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
         jButton3.addActionListener(this::jButton3ActionPerformed);
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 286, 600, 35));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 250, 80));
 
         jButton4.setBackground(new java.awt.Color(7, 92, 110));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -84,7 +84,7 @@ public class TelaQuestão1 extends javax.swing.JFrame {
         jButton4.setText("Alternativa D");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
         jButton4.addActionListener(this::jButton4ActionPerformed);
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 380, 600, 35));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 370, 250, 80));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 470));
 
