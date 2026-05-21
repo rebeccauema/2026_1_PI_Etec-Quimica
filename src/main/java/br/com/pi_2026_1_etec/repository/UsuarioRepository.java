@@ -27,9 +27,7 @@ public class UsuarioRepository {
 
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            return rs.next(); // true se encontrou algum resultado
+            return rs.next(); 
         }
     }
 }
-
-//Insere um novo usuário no banco de dados e verifica se o email já está cadastrado
