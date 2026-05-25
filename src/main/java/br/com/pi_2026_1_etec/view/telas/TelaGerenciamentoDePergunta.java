@@ -60,7 +60,7 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
 
         jPanelTitulo2.setBackground(new java.awt.Color(146, 25, 19));
 
-        jTextField1.setText("Pesquisar aluno...");
+        jTextField1.setText("Pesquisar pergunta...");
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
         jButton1.setBackground(new java.awt.Color(146, 25, 19));

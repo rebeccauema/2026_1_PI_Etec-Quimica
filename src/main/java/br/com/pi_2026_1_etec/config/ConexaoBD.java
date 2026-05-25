@@ -1,4 +1,3 @@
-
 package br.com.pi_2026_1_etec.config;
 
 import java.sql.Connection;

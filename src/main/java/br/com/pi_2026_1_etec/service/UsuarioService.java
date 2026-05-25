@@ -32,7 +32,7 @@ public class UsuarioService {
             repository.cadastrar(usuario);
             return "sucesso";
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return "Erro ao cadastrar: " + e.getMessage();
         }
     }

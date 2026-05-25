@@ -1,5 +1,7 @@
 package br.com.pi_2026_1_etec.view.telas;
 
+import br.com.pi_2026_1_etec.repository.UsuarioRepository;
+import br.com.pi_2026_1_etec.model.Usuario;
 
 public class TelaLogin extends javax.swing.JFrame {
     
@@ -164,16 +166,35 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarActionPerformed
-                                                 
-    String email = jTextFieldEmail.getText(); 
-    String senha = new String(txtSenha.getPassword());
+    String email = jTextFieldEmail.getText(); // Pega o e-mail preenchido no campo
+    String senha = new String(txtSenha.getPassword()); // Pega a senha preenchida no campo
 
-    // Apenas simulacao de banco de dados enquanto isso
-    if (email.equals("exemplo@email.com") && senha.equals("1234")) {
-        new TelaMenuAlunos().setVisible(true); //vai para a tela de menu dos alunos
-        this.dispose();
- } else {
+    if (email.isBlank() || senha.isBlank()) { // Verifica se os campos de e-mail e senha estão vazios
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    try { 
+        UsuarioRepository repository = new UsuarioRepository();
+
+        Usuario aluno = repository.buscarAlunoPorEmail(email); // Busca o aluno pelo e-mail através do método buscarAlunoPorEmail criado na classe UsuarioRepository
+        if (aluno != null && aluno.getSenha().equals(senha)) { // Compara a senha e decide o que fazer
+            new TelaMenuAlunos().setVisible(true);
+            this.dispose();
+            return;
+        }
+
+        Usuario professor = repository.buscarProfessorPorEmail(email);
+        if (professor != null && professor.getSenha().equals(senha)) {
+            new TelaMenuProfessores().setVisible(true);
+            this.dispose();
+            return;
+        }
+
         javax.swing.JOptionPane.showMessageDialog(this, "E-mail ou senha incorretos.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao conectar: " + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_entrarActionPerformed
 

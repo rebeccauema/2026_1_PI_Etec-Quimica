@@ -168,31 +168,18 @@ public class TelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButtonMostrarSenhaActionPerformed
 
     private void jButtonCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCriarContaActionPerformed
-        TelaCadastro tela2 = new TelaCadastro();
-        tela2.setVisible(true);
-        
         String nome = txtNome.getText();
         String email = txtEmail.getText();
         String senha = new String(txtSenha.getPassword());
-        
-        Usuario novoUsuario = new Usuario(); 
-        novoUsuario.setNome(nome);
-        novoUsuario.setEmail(email);
-        novoUsuario.setSenha(senha);
-        
+
         UsuarioService service = new UsuarioService();
-        //boolean sucesso = service.cadastrarUsuario(novoUsuario);
-        
-        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Preencha todos os campos!"); }
-        else { javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");}
-       
-        //if (sucesso) {
-        //javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
-   // } else {
-       // javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar.");
-   // }
-            
+        String resultado = service.cadastrar(nome, email, senha);
+
+        if (resultado.equals("sucesso")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, resultado);
+        }
     }//GEN-LAST:event_jButtonCriarContaActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
