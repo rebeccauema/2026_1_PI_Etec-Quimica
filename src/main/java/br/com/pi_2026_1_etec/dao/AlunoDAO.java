@@ -1,3 +1,4 @@
+private javax.swing.JLabel jLabelNumeroAlunos;
 public int contarAlunos() {
     String sql = "SELECT COUNT(*) FROM aluno";
     try (Connection conn = ConexaoBanco.getConexao();
