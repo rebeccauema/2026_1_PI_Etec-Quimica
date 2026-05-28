@@ -1,7 +1,21 @@
 package br.com.pi_2026_1_etec.view.telas;
 
+import br.com.pi_2026_1_etec.dao.AlunoDAO;
+import br.com.pi_2026_1_etec.model.Aluno;
+
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 public class TelaGerenciarAlunos extends javax.swing.JFrame {
     
+    private AlunoDAO alunoDAO = new AlunoDAO();
+    private ArrayList<Aluno> alunosCarregados = new ArrayList<>();
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaGerenciarAlunos.class.getName());
 
     public TelaGerenciarAlunos() {
@@ -12,13 +26,12 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
         jPanelAcertos.setBackground(new java.awt.Color(7 ,92, 110, 15));
         jPanelErros.setBackground(new java.awt.Color(7, 92, 110, 15));
         jPanelGraficos.setBackground(new java.awt.Color(7, 92, 110, 15));
-        
-        System.out.println("X: " + jLabelAlunos.getX());
-        System.out.println("Y: " + jLabelAlunos.getY());
+
+        configurarBusca();
+        carregarAlunos();
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
@@ -53,18 +66,17 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelAlunos.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabelAlunos.setFont(new java.awt.Font("Segoe UI", 1, 22));
         jLabelAlunos.setText("Alunos");
 
-        jTextField1.setText("Pesquisar aluno...");
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        jTextField1.setText("");
 
         jButton1.setBackground(new java.awt.Color(7, 92, 110));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Buscar");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16));
         jLabel2.setText("Lista de Alunos");
 
         jPanelListaDeAlunos.setBackground(new java.awt.Color(7, 92, 110));
@@ -80,7 +92,7 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
             .addGap(0, 25, Short.MAX_VALUE)
         );
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImagensEtec/LogoCPS.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImagensEtec/LogoCPS.png")));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
@@ -141,8 +153,8 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        jLabel4.setText("Maria");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 22));
+        jLabel4.setText("Aluno");
 
         jPanelTotalPerguntas.setBackground(new java.awt.Color(255, 255, 255));
         jPanelTotalPerguntas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
@@ -213,13 +225,13 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
         jPanelGraficos.setBackground(new java.awt.Color(255, 255, 255));
         jPanelGraficos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(7, 92, 110)));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jLabel8.setText("Médio");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jLabel9.setText("Difícil");
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jLabel10.setText("Fácil");
 
         javax.swing.GroupLayout jPanelGraficosLayout = new javax.swing.GroupLayout(jPanelGraficos);
@@ -229,7 +241,7 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGraficosLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(77, 77, 77)
                 .addComponent(jLabel9)
@@ -352,36 +364,100 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
+
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLayeredPane1)
         );
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLayeredPane1)
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void configurarBusca() {
+        jButton1.addActionListener(e -> buscarAlunos(jTextField1.getText()));
 
-    private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
-        new TelaMenuProfessores().setVisible(true); // Exibe o que foi criado. Nesse caso, o objeto TelaMenuProfessores
-        this.dispose(); // Método dispose encerra e destrói a janela de forma segura
-    }//GEN-LAST:event_jButtonVoltarActionPerformed
+        jTextField1.addActionListener(e -> buscarAlunos(jTextField1.getText()));
+    }
 
-    /**
-     * @param args the command line arguments
-     */
+    private void carregarAlunos() {
+        alunosCarregados = alunoDAO.listarAlunos();
+        mostrarAlunosNaTela(alunosCarregados);
+    }
+
+    private void buscarAlunos(String textoBusca) {
+        if (textoBusca == null || textoBusca.isBlank()) {
+            carregarAlunos();
+            return;
+        }
+
+        alunosCarregados = alunoDAO.buscarAlunos(textoBusca);
+        mostrarAlunosNaTela(alunosCarregados);
+    }
+
+    private void mostrarAlunosNaTela(ArrayList<Aluno> alunos) {
+        limparPaineisDeAlunos();
+
+        JPanel[] paineis = {jPanel2, jPanel3, jPanel4, jPanel5};
+
+        for (int i = 0; i < paineis.length && i < alunos.size(); i++) {
+            Aluno aluno = alunos.get(i);
+            JPanel painel = paineis[i];
+
+            JLabel label = new JLabel("  " + aluno.getNome() + " - " + aluno.getEmail());
+            label.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            label.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    mostrarDetalhesAluno(aluno);
+                }
+            });
+
+            painel.setLayout(new BorderLayout());
+            painel.add(label, BorderLayout.CENTER);
+            painel.revalidate();
+            painel.repaint();
+        }
+    }
+
+    private void limparPaineisDeAlunos() {
+        JPanel[] paineis = {jPanel2, jPanel3, jPanel4, jPanel5};
+
+        for (JPanel painel : paineis) {
+            painel.removeAll();
+            painel.revalidate();
+            painel.repaint();
+        }
+    }
+
+    private void mostrarDetalhesAluno(Aluno aluno) {
+        jLabel4.setText(aluno.getNome());
+
+        int perguntas = aluno.getQuestoesRespondidas();
+        int acertos = aluno.getTaxaAcertos();
+        int erros = perguntas - acertos;
+
+        if (erros < 0) {
+            erros = 0;
+        }
+
+        jLabel6.setText("Perguntas: " + perguntas);
+        jLabel5.setText("Acertos: " + acertos);
+        jLabel7.setText("Erros: " + erros);
+    }
+
+    private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {
+        new TelaMenuProfessores().setVisible(true);
+        this.dispose();
+    }
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -392,13 +468,10 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new TelaGerenciarAlunos().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonVoltar;
     private javax.swing.JLabel jLabel10;
@@ -424,5 +497,4 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelListaDeAlunos;
     private javax.swing.JPanel jPanelTotalPerguntas;
     private javax.swing.JTextField jTextField1;
-    // End of variables declaration//GEN-END:variables
 }
