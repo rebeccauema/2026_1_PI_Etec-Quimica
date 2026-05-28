@@ -1,10 +1,5 @@
 package br.com.pi_2026_1_etec.view.telas;
 
-import br.com.pi_2026_1_etec.dao.ImagemDAO;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import br.com.pi_2026_1_etec.model.Material;
 
 public class TelaAlterarPergunta extends javax.swing.JFrame {
@@ -40,7 +35,7 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         while (rs.next()) {
             int id = rs.getInt("id");
             String nome = rs.getString("nome");
-            String caminho = rs.getString("caminho_imagens"); 
+            String caminho = rs.getString("caminho"); 
             
             
             Material mat = new Material(id, nome, caminho);
@@ -63,7 +58,6 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
     }
     
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
