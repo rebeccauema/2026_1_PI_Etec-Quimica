@@ -1,8 +1,13 @@
 package br.com.pi_2026_1_etec.view.telas;
 
+import br.com.pi_2026_1_etec.dao.PerguntaDAO;
+import br.com.pi_2026_1_etec.model.Alternativa;
+import br.com.pi_2026_1_etec.model.Questao;
+
 public class TelaQuestao1 extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaQuestão2.class.getName());
+    private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(TelaQuestao1.class.getName());
 
     public TelaQuestao1() {
         initComponents();
@@ -112,7 +117,7 @@ public class TelaQuestao1 extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaQuestão2().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TelaQuestao1().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

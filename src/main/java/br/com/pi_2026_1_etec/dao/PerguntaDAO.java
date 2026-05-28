@@ -6,6 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+import br.com.pi_2026_1_etec.model.Questao;
+import br.com.pi_2026_1_etec.model.Alternativa;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PerguntaDAO {
 
     public static void vincularImagem(int idPergunta, int idImagem) {
