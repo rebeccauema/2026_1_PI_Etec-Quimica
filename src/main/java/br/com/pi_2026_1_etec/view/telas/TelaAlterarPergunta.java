@@ -20,7 +20,7 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
     }
     
     private void carregarMateriaisNoCombobox(){
-        String sql = "SELECT m.id, m.nome, i.caminho FROM material m JOIN imagem i ON m.id_imagem = i.id";
+        String sql = "SELECT m.id_material, m.nome, i.caminho_imagem FROM material m JOIN imagem i ON m.id_material = i.id_imagem";
     
     
     java.sql.Connection conn = null;
@@ -38,9 +38,9 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         
   
         while (rs.next()) {
-            int id = rs.getInt("id");
+            int id = rs.getInt("id_material");
             String nome = rs.getString("nome");
-            String caminho = rs.getString("caminho_imagens"); 
+            String caminho = rs.getString("caminho_imagem"); 
             
             
             Material mat = new Material(id, nome, caminho);
@@ -351,6 +351,8 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         
         String caminhoDaImagem = material.getCaminhoImagem(); 
         
+        System.out.println("Caminho que veio do banco: " + caminhoDaImagem);
+        
         
         if (caminhoDaImagem != null && !caminhoDaImagem.isEmpty()) {
             try {
@@ -400,8 +402,23 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        //java.awt.EventQueue.invokeLater(() -> new TelaAlterarPergunta(1).setVisible(true));
+       try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        /* Cria e exibe a tela */
+        java.awt.EventQueue.invokeLater(() -> {
+            // Criamos a tela passando o número 1 como ID de teste para ela conseguir abrir
+            TelaAlterarPergunta tela = new TelaAlterarPergunta(1); 
+            tela.setVisible(true); // <-- ESSA LINHA faz a tela aparecer de verdade!
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
