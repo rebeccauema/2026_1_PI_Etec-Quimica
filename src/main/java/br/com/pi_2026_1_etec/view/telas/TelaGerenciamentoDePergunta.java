@@ -3,12 +3,7 @@ package br.com.pi_2026_1_etec.view.telas;
 public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaGerenciamentoDePergunta.class.getName());
-
-    public TelaGerenciamentoDePergunta() {
-        initComponents();
-        carregarFiltros();
-    }
-    
+   
     private void carregarFiltros() {
         jComboBoxTema.addItem("Todos");
         jComboBoxTema.addItem("Sistema");
@@ -248,7 +243,7 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldPesquisarPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarPerguntaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextFieldPesquisarPerguntaActionPerformed
 
     private void jButtonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarActionPerformed
