@@ -29,22 +29,13 @@ public class AlunoDAO {
             ORDER BY p.nome
         """;
 
-        try (Connection conn = ConexaoBD.obterConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
+        try (
+            Connection conn = ConexaoBD.obterConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()
+        ) {
             while (rs.next()) {
-                Aluno aluno = new Aluno();
-
-                aluno.setId(rs.getInt("idpessoa"));
-                aluno.setNome(rs.getString("nome"));
-                aluno.setSenha(rs.getString("senha"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setQuestoesRespondidas(rs.getInt("questoes_respondidas"));
-                aluno.setTaxaAcertos(rs.getInt("taxa_acertos"));
-                aluno.setProfessorEmail(rs.getString("professor_email"));
-                aluno.setPessoaIdPessoa(rs.getInt("pessoa_idpessoa"));
-
+                Aluno aluno = montarAluno(rs);
                 alunos.add(aluno);
             }
 
@@ -74,29 +65,20 @@ public class AlunoDAO {
             ORDER BY p.nome
         """;
 
-        try (Connection conn = ConexaoBD.obterConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (
+            Connection conn = ConexaoBD.obterConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             String busca = "%" + textoBusca + "%";
 
             stmt.setString(1, busca);
             stmt.setString(2, busca);
 
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Aluno aluno = new Aluno();
-
-                aluno.setId(rs.getInt("idpessoa"));
-                aluno.setNome(rs.getString("nome"));
-                aluno.setSenha(rs.getString("senha"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setQuestoesRespondidas(rs.getInt("questoes_respondidas"));
-                aluno.setTaxaAcertos(rs.getInt("taxa_acertos"));
-                aluno.setProfessorEmail(rs.getString("professor_email"));
-                aluno.setPessoaIdPessoa(rs.getInt("pessoa_idpessoa"));
-
-                alunos.add(aluno);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Aluno aluno = montarAluno(rs);
+                    alunos.add(aluno);
+                }
             }
 
         } catch (SQLException e) {
@@ -122,26 +104,16 @@ public class AlunoDAO {
             WHERE a.email = ?
         """;
 
-        try (Connection conn = ConexaoBD.obterConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (
+            Connection conn = ConexaoBD.obterConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             stmt.setString(1, email);
 
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Aluno aluno = new Aluno();
-
-                aluno.setId(rs.getInt("idpessoa"));
-                aluno.setNome(rs.getString("nome"));
-                aluno.setSenha(rs.getString("senha"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setQuestoesRespondidas(rs.getInt("questoes_respondidas"));
-                aluno.setTaxaAcertos(rs.getInt("taxa_acertos"));
-                aluno.setProfessorEmail(rs.getString("professor_email"));
-                aluno.setPessoaIdPessoa(rs.getInt("pessoa_idpessoa"));
-
-                return aluno;
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return montarAluno(rs);
+                }
             }
 
         } catch (SQLException e) {
@@ -151,15 +123,18 @@ public class AlunoDAO {
         return null;
     }
 
-    public int contarAlunosAtivos() {
-        String sql = "SELECT COUNT(*) AS total FROM aluno";
-        try (Connection con = ConexaoBD.obterConexao();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            return rs.next() ? rs.getInt("total") : 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
+    private Aluno montarAluno(ResultSet rs) throws SQLException {
+        Aluno aluno = new Aluno();
+
+        aluno.setId(rs.getInt("idpessoa"));
+        aluno.setNome(rs.getString("nome"));
+        aluno.setSenha(rs.getString("senha"));
+        aluno.setEmail(rs.getString("email"));
+        aluno.setQuestoesRespondidas(rs.getInt("questoes_respondidas"));
+        aluno.setTaxaAcertos(rs.getInt("taxa_acertos"));
+        aluno.setProfessorEmail(rs.getString("professor_email"));
+        aluno.setPessoaIdPessoa(rs.getInt("pessoa_idpessoa"));
+
+        return aluno;
     }
 }

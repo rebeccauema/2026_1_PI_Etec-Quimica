@@ -23,7 +23,7 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
         
         jPanelListaDeAlunos.setBackground(new java.awt.Color(7, 92, 110, 15));
         jPanelTotalPerguntas.setBackground(new java.awt.Color(7, 92, 110, 15));
-        jPanelAcertos.setBackground(new java.awt.Color(7 ,92, 110, 15));
+        jPanelAcertos.setBackground(new java.awt.Color(7, 92, 110, 15));
         jPanelErros.setBackground(new java.awt.Color(7, 92, 110, 15));
         jPanelGraficos.setBackground(new java.awt.Color(7, 92, 110, 15));
 
@@ -31,6 +31,7 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
         carregarAlunos();
     }
 
+    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
@@ -379,7 +380,6 @@ public class TelaGerenciarAlunos extends javax.swing.JFrame {
 
     private void configurarBusca() {
         jButton1.addActionListener(e -> buscarAlunos(jTextField1.getText()));
-
         jTextField1.addActionListener(e -> buscarAlunos(jTextField1.getText()));
     }
 
