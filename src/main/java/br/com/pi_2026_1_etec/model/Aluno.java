@@ -38,4 +38,14 @@ public class Aluno extends Usuario {
     public void setPessoaIdPessoa(int pessoaIdPessoa) {
         this.pessoaIdPessoa = pessoaIdPessoa;
     }
+
+    public int getErros() {
+        int erros = questoesRespondidas - taxaAcertos;
+
+        if (erros < 0) {
+            return 0;
+        }
+
+        return erros;
+    }
 }
