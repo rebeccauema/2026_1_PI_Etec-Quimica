@@ -1,9 +1,5 @@
 package br.com.pi_2026_1_etec.view.telas;
 
-import br.com.pi_2026_1_etec.dao.PerguntaDAO;
-import br.com.pi_2026_1_etec.model.Alternativa;
-import br.com.pi_2026_1_etec.model.Questao;
-
 public class TelaQuestao1 extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger =
