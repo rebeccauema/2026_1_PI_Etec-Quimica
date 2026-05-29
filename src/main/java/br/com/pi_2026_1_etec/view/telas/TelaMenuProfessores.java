@@ -2,16 +2,19 @@ package br.com.pi_2026_1_etec.view.telas;
 
 import br.com.pi_2026_1_etec.model.Sessao;
 import br.com.pi_2026_1_etec.dao.AlunoDAO;
+import br.com.pi_2026_1_etec.dao.PerguntaDAO;
 import javax.swing.JOptionPane;
 
 public class TelaMenuProfessores extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMenuProfessores.class.getName());
     private AlunoDAO alunoDAO = new AlunoDAO();
+    private PerguntaDAO perguntaDAO = new PerguntaDAO();
 
    public TelaMenuProfessores() {
         initComponents();
         atualizarAlunosAtivos();
+        atualizarPerguntasRegistradas();
         
         if (!Sessao.estaLogado()) {
             JOptionPane.showMessageDialog(this, "Faça login para acessar.");
@@ -28,6 +31,10 @@ public class TelaMenuProfessores extends javax.swing.JFrame {
     private void atualizarAlunosAtivos() {
         int total = alunoDAO.contarAlunosAtivos();
         jLabelSubtitulo2.setText("Alunos ativos: " + total);
+    }
+    private void atualizarPerguntasRegistradas() {
+        int total = perguntaDAO.contarPerguntas();
+        jLabel8.setText("Perguntas registradas: " + total);
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

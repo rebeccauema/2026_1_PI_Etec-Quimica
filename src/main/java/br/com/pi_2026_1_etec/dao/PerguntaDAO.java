@@ -44,4 +44,16 @@ public class PerguntaDAO {
             JOptionPane.showMessageDialog(null, "Erro ao remover imagem: " + e.getMessage());
         }
     }
+
+    public int contarPerguntas() {
+        String sql = "SELECT COUNT(*) AS total FROM pergunta";
+        try (Connection con = ConexaoBD.obterConexao();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            return rs.next() ? rs.getInt("total") : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

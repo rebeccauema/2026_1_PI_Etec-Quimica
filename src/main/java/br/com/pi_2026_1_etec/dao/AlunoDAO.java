@@ -137,4 +137,16 @@ public class AlunoDAO {
 
         return aluno;
     }
+
+    public int contarAlunosAtivos() {
+        String sql = "SELECT COUNT(*) AS total FROM aluno";
+        try (Connection con = ConexaoBD.obterConexao();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            return rs.next() ? rs.getInt("total") : 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }
