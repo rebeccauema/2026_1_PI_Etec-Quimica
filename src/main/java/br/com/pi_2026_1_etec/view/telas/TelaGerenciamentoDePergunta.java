@@ -4,6 +4,11 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaGerenciamentoDePergunta.class.getName());
    
+    public TelaGerenciamentoDePergunta() {
+        initComponents();
+        carregarFiltros();
+    }
+    
     private void carregarFiltros() {
         jComboBoxTema.addItem("Todos");
         jComboBoxTema.addItem("Sistema");
