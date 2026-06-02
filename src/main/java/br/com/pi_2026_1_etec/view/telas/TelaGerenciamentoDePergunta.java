@@ -4,11 +4,6 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaGerenciamentoDePergunta.class.getName());
    
-    public TelaGerenciamentoDePergunta() {
-        initComponents();
-        carregarFiltros();
-    }
-    
     private void carregarFiltros() {
         jComboBoxTema.addItem("Todos");
         jComboBoxTema.addItem("Sistema");
@@ -248,7 +243,7 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldPesquisarPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarPerguntaActionPerformed
-
+        
     }//GEN-LAST:event_jTextFieldPesquisarPerguntaActionPerformed
 
     private void jButtonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarActionPerformed
@@ -269,7 +264,8 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVoltarActionPerformed
 
     private void jButtonAdicionarPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarPerguntaActionPerformed
-
+        new TelaAlterarPergunta(0).setVisible(true); // 0 = modo criação (sem ID)
+        this.dispose();
     }//GEN-LAST:event_jButtonAdicionarPerguntaActionPerformed
 
     private void jComboBoxTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTemaActionPerformed

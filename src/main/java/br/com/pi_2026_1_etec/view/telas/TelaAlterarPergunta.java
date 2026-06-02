@@ -5,13 +5,24 @@ import br.com.pi_2026_1_etec.model.Material;
 public class TelaAlterarPergunta extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAlterarPergunta.class.getName());
-    
+    private int idPergunta;
     
     public TelaAlterarPergunta(int idPergunta) {
+        this.idPergunta = idPergunta;
+
         initComponents();
         org.jdesktop.swingx.autocomplete.AutoCompleteDecorator.decorate(jComboBox2);
         carregarMateriaisNoCombobox();
         
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        if (idPergunta > 0) {
+            carregarDadosDaPergunta(idPergunta); // edição
+        } else {
+            jLabel1.setText("Nova Pergunta");
+            jLabel2.setText("Preencha os campos da nova questão abaixo.");
+            jButton1.setText("Adicionar pergunta");
+        }
     }
     
     private void carregarMateriaisNoCombobox(){
@@ -56,6 +67,66 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
     }
     }
     
+    private void carregarDadosDaPergunta(int idPergunta) {
+
+        String sql = """
+            SELECT 
+                p.enunciado,
+                p.dificuldade,
+                p.id_material,
+                aA.texto AS alternativaA,
+                aB.texto AS alternativaB,
+                aC.texto AS alternativaC,
+                aD.texto AS alternativaD
+            FROM pergunta p
+            JOIN alternativa aA ON aA.id_pergunta = p.id_pergunta AND aA.letra = 'A'
+            JOIN alternativa aB ON aB.id_pergunta = p.id_pergunta AND aB.letra = 'B'
+            JOIN alternativa aC ON aC.id_pergunta = p.id_pergunta AND aC.letra = 'C'
+            JOIN alternativa aD ON aD.id_pergunta = p.id_pergunta AND aD.letra = 'D'
+            WHERE p.id_pergunta = ?
+        """;
+
+        try (
+            java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+            java.sql.PreparedStatement ps = conn.prepareStatement(sql)
+        ){
+
+            ps.setInt(1, idPergunta);
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                jTextFieldEditarPergunta.setText(rs.getString("enunciado"));
+
+                jTextField1.setText(rs.getString("alternativaA"));
+                jTextField2.setText(rs.getString("alternativaB"));
+                jTextField3.setText(rs.getString("alternativaC"));
+                jTextField4.setText(rs.getString("alternativaD"));
+
+                jComboBox1.setSelectedItem(rs.getString("dificuldade"));
+
+                int idMaterial = rs.getInt("id_material");
+                selecionarMaterialNoCombo(idMaterial);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar dados da pergunta: " + e.getMessage());
+        }
+    }
+    
+    private void selecionarMaterialNoCombo(int idMaterial) {
+        for (int i = 0; i < jComboBox2.getItemCount(); i++) {
+            Object item = jComboBox2.getItemAt(i);
+
+            if (item instanceof Material material) {
+                if (material.getId() == idMaterial) {
+                    jComboBox2.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -67,21 +138,17 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         jTextFieldEditarPergunta = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanelAlternativaA = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPanelAlternativaB = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jPanelAlternativaC = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jPanelAlternativaD = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jButton10 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jButtonRemoverImagem = new javax.swing.JButton();
@@ -132,9 +199,6 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         jPanelAlternativaA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(146, 25, 19)));
         jPanelAlternativaA.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-        jPanelAlternativaA.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(628, 3, 60, 30));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("A");
@@ -142,14 +206,11 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
 
         jTextField1.setText("Alternativa A");
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
-        jPanelAlternativaA.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 590, 30));
+        jPanelAlternativaA.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 660, 30));
 
         jPanelAlternativaB.setBackground(new java.awt.Color(146, 25, 19));
         jPanelAlternativaB.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(146, 25, 19)));
         jPanelAlternativaB.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-        jPanelAlternativaB.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(628, 3, 60, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -157,14 +218,11 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         jPanelAlternativaB.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, -1, -1));
 
         jTextField2.setText("Alternativa B");
-        jPanelAlternativaB.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 590, 30));
+        jPanelAlternativaB.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 660, 30));
 
         jPanelAlternativaC.setBackground(new java.awt.Color(146, 25, 19));
         jPanelAlternativaC.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(146, 25, 19)));
         jPanelAlternativaC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton8.addActionListener(this::jButton8ActionPerformed);
-        jPanelAlternativaC.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(628, 3, 60, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,7 +230,7 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         jPanelAlternativaC.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, -1, -1));
 
         jTextField3.setText("Alternativa C");
-        jPanelAlternativaC.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 590, 30));
+        jPanelAlternativaC.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 660, 30));
 
         jPanelAlternativaD.setBackground(new java.awt.Color(146, 25, 19));
         jPanelAlternativaD.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(146, 25, 19)));
@@ -184,10 +242,7 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         jPanelAlternativaD.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, -1, -1));
 
         jTextField4.setText("Alternativa D");
-        jPanelAlternativaD.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 590, 30));
-
-        jButton10.addActionListener(this::jButton10ActionPerformed);
-        jPanelAlternativaD.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(628, 3, 60, 30));
+        jPanelAlternativaD.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 3, 660, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dificuldade", "Fácil", "Médio", "Difícil" }));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
@@ -293,18 +348,6 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldEditarPerguntaActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -313,12 +356,10 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
-
     private void jButtonRemoverImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverImagemActionPerformed
-        
+        jComboBox2.setSelectedIndex(-1);
+        jLabelImagem.setIcon(null);
+        jLabelImagem.setText("Imagem");
     }//GEN-LAST:event_jButtonRemoverImagemActionPerformed
 
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
@@ -372,10 +413,178 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
             jLabelImagem.setIcon(null);
             jLabelImagem.setText("Sem imagem");
         }
-    }
-            
-    
+    }           
     }//GEN-LAST:event_jComboBox2ActionPerformed
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
+        String enunciado   = jTextFieldEditarPergunta.getText().trim();
+        String altA        = jTextField1.getText().trim();
+        String altB        = jTextField2.getText().trim();
+        String altC        = jTextField3.getText().trim();
+        String altD        = jTextField4.getText().trim();
+        String dificuldade = jComboBox1.getSelectedItem().toString();
+
+        if (enunciado.isEmpty() || dificuldade.equals("Dificuldade")) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Preencha o enunciado e a dificuldade.",
+                "Atenção",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        if (idPergunta == 0) {
+            salvarNovaPergunta(enunciado, altA, altB, altC, altD, dificuldade);
+        } else {
+            atualizarPergunta(enunciado, altA, altB, altC, altD, dificuldade);
+        }
+    }
+    
+    private void salvarNovaPergunta(String enunciado, String altA, String altB,
+                                String altC, String altD, String dificuldade) {
+
+        String sqlPergunta =
+            "INSERT INTO pergunta (enunciado, dificuldade, id_material) VALUES (?, ?, ?)";
+        String sqlAlternativa =
+            "INSERT INTO alternativa (id_pergunta, letra, texto) VALUES (?, ?, ?)";
+
+        try (java.sql.Connection conn =
+                br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
+
+            conn.setAutoCommit(false);
+
+            int novoId;
+
+            try (java.sql.PreparedStatement ps =
+                    conn.prepareStatement(
+                        sqlPergunta,
+                        java.sql.Statement.RETURN_GENERATED_KEYS)) {
+
+                ps.setString(1, enunciado);
+                ps.setString(2, dificuldade);
+
+                Object itemSelecionado = jComboBox2.getSelectedItem();
+                if (itemSelecionado instanceof Material material) {
+                    ps.setInt(3, material.getId());
+                } else {
+                    ps.setNull(3, java.sql.Types.INTEGER);
+                }
+
+                ps.executeUpdate();
+
+                try (java.sql.ResultSet rs = ps.getGeneratedKeys()) {
+                    rs.next();
+                    novoId = rs.getInt(1);
+                }
+            }
+
+            String[][] alternativas = {
+                {"A", altA},
+                {"B", altB},
+                {"C", altC},
+                {"D", altD}
+            };
+
+            try (java.sql.PreparedStatement ps =
+                    conn.prepareStatement(sqlAlternativa)) {
+
+                for (String[] alt : alternativas) {
+                    ps.setInt(1, novoId);
+                    ps.setString(2, alt[0]);
+                    ps.setString(3, alt[1]);
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+            }
+
+            conn.commit();
+
+            javax.swing.JOptionPane.showMessageDialog(
+                this, "Pergunta adicionada com sucesso!"
+            );
+
+            new TelaGerenciamentoDePergunta().setVisible(true);
+            this.dispose();
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Erro ao salvar: " + e.getMessage(),
+                "Erro",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    private void atualizarPergunta(String enunciado, String altA, String altB,
+                               String altC, String altD, String dificuldade) {
+
+    String sqlPergunta =
+        "UPDATE pergunta SET enunciado = ?, dificuldade = ?, id_material = ? WHERE id_pergunta = ?";
+    String sqlAlternativa =
+        "UPDATE alternativa SET texto = ? WHERE id_pergunta = ? AND letra = ?";
+
+    try (java.sql.Connection conn =
+             br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
+
+        conn.setAutoCommit(false);
+
+        try (java.sql.PreparedStatement ps =
+                 conn.prepareStatement(sqlPergunta)) {
+
+            ps.setString(1, enunciado);
+            ps.setString(2, dificuldade);
+
+            Object itemSelecionado = jComboBox2.getSelectedItem();
+            if (itemSelecionado instanceof Material material) {
+                ps.setInt(3, material.getId());
+            } else {
+                ps.setNull(3, java.sql.Types.INTEGER);
+            }
+
+            ps.setInt(4, idPergunta);
+            ps.executeUpdate();
+        }
+
+        String[][] alternativas = {
+            {"A", altA},
+            {"B", altB},
+            {"C", altC},
+            {"D", altD}
+        };
+
+        try (java.sql.PreparedStatement ps =
+                 conn.prepareStatement(sqlAlternativa)) {
+
+            for (String[] alt : alternativas) {
+                ps.setString(1, alt[1]);
+                ps.setInt(2, idPergunta);
+                ps.setString(3, alt[0]);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        }
+
+        conn.commit();
+
+        javax.swing.JOptionPane.showMessageDialog(
+            this, "Pergunta atualizada com sucesso!"
+        );
+
+        new TelaGerenciamentoDePergunta().setVisible(true);
+        this.dispose();
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Erro ao atualizar: " + e.getMessage(),
+            "Erro",
+            javax.swing.JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -416,10 +625,6 @@ public class TelaAlterarPergunta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonRemoverImagem;
     private javax.swing.JButton jButtonVoltar;
     private javax.swing.JComboBox<String> jComboBox1;

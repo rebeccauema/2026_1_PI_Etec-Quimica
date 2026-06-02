@@ -24,7 +24,7 @@ public class Material {
         return nome;
     }
     
-    public int getID(){
+    public int getId(){
         return id;
     }
     }
