@@ -2,6 +2,8 @@ package br.com.pi_2026_1_etec.view.telas;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
+import java.util.List;
+import java.util.ArrayList;
 
 public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     
@@ -15,6 +17,7 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         carregarPerguntas();
+        carregarFiltros();
         
         jTablePerguntas.getColumnModel().getColumn(3).setMinWidth(0);
         jTablePerguntas.getColumnModel().getColumn(3).setMaxWidth(0);
@@ -34,21 +37,81 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     
     private void carregarPerguntas() {
         DefaultTableModel model = (DefaultTableModel) jTablePerguntas.getModel();
-        model.setRowCount(0); 
+        model.setRowCount(0);
 
-        model.addRow(new Object[]{
-            "Qual é a função do material mostrado na imagem?",
-            "Difícil",
-            "26/05/2026 14:30",
-            1
-        });
+        String sql = "SELECT p.id_pergunta, p.texto AS enunciado, nv.nome AS dificuldade, '' AS criado_em " +
+             "FROM pergunta p " +
+             "LEFT JOIN nivel nv ON p.id_nivel = nv.id_nivel " +
+             "ORDER BY p.id_pergunta DESC";
 
-        model.addRow(new Object[]{
-            "O que é um sistema operacional?",
-            "Fácil",
-            "20/05/2026 09:10",
-            2
-        });
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+            java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("enunciado"),
+                    rs.getString("dificuldade"),
+                    rs.getString("criado_em"),
+                    rs.getInt("id_pergunta")   // coluna 3 (ID oculto)
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Erro ao carregar perguntas: " + e.getMessage(),
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void aplicarFiltro(String texto, String tema, String dificuldade) {
+        DefaultTableModel model = (DefaultTableModel) jTablePerguntas.getModel();
+        model.setRowCount(0);
+
+        StringBuilder sql = new StringBuilder(
+            "SELECT p.id_pergunta, p.texto AS enunciado, nv.nome AS dificuldade, '' AS criado_em " +
+            "FROM pergunta p " +
+            "LEFT JOIN nivel nv ON p.id_nivel = nv.id_nivel " +
+            "WHERE 1=1 "
+        );
+
+        List<Object> params = new java.util.ArrayList<>();
+
+        if (texto != null && !texto.isBlank() && !texto.equals("Pesquisar pergunta...")) {
+            sql.append(" AND p.texto LIKE ?");
+            params.add("%" + texto + "%");
+        }
+
+        if (dificuldade != null && !dificuldade.equals("Todas") && !dificuldade.equals("Dificuldade")) {
+            sql.append(" AND nv.nome = ?");
+            params.add(dificuldade);
+        }
+
+        sql.append(" ORDER BY p.id_pergunta DESC");
+
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+            java.sql.PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getString("enunciado"),
+                        rs.getString("dificuldade"),
+                        rs.getString("criado_em"),
+                        rs.getInt("id_pergunta")
+                    });
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Erro ao filtrar: " + e.getMessage(),
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -177,12 +240,10 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldPesquisarPerguntaActionPerformed
 
     private void jButtonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarActionPerformed
-        String texto = jTextFieldPesquisarPergunta.getText();
-        String tema = jComboBoxTema.getSelectedItem().toString();
-        String dificuldade = jComboBoxDificuldade.getSelectedItem().toString();
-        aplicarFiltro(texto, tema, dificuldade);
-        
-        carregarPerguntas(); 
+    String texto      = jTextFieldPesquisarPergunta.getText();
+    String tema       = jComboBoxTema.getSelectedItem().toString();
+    String dificuldade = jComboBoxDificuldade.getSelectedItem().toString();
+    aplicarFiltro(texto, tema, dificuldade);
     }//GEN-LAST:event_jButtonFiltrarActionPerformed
 
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
@@ -218,15 +279,6 @@ public class TelaGerenciamentoDePergunta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void aplicarFiltro(String texto, String tema, String dificuldade) {
-        // TODO: implementar filtro real. Por enquanto apenas registra os valores.
-        // System.out.println pode ser útil para debug local.
-        System.out.println("Filtro: " + texto + ", " + tema + ", " + dificuldade);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
