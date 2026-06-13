@@ -1,13 +1,87 @@
 package br.com.pi_2026_1_etec.view.telas;
 
-public class TelaQuestao1 extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger =
-            java.util.logging.Logger.getLogger(TelaQuestao1.class.getName());
+import java.util.List;
 
-    public TelaQuestao1() {
+import br.com.pi_2026_1_etec.model.Alternativa;
+import br.com.pi_2026_1_etec.model.Pergunta;
+
+public class TelaQuestao1 extends javax.swing.JFrame {
+
+    private List<Pergunta> listaPerguntas;
+    private int indiceAtual = 0;
+    private List<Alternativa> alternativasAtuais;
+    
+
+    private static final java.util.logging.Logger logger
+            = java.util.logging.Logger.getLogger(TelaQuestao1.class.getName());
+
+    public TelaQuestao1(List<Pergunta> perguntas) {
         initComponents();
+        this.listaPerguntas = perguntas;
+        this.indiceAtual = 0;
+
+        exibirPerguntaAtual();
     }
+
+    private void exibirPerguntaAtual() {
+        if (listaPerguntas != null && indiceAtual < listaPerguntas.size()) {
+            Pergunta p = listaPerguntas.get(indiceAtual);
+            jLabelPergunta.setText(p.getTexto());// troca o texto da label pelo texto da pergunta na lista
+
+            try {//try por causa da conexao com bd
+                br.com.pi_2026_1_etec.dao.AlternativaDAO altDAO = new br.com.pi_2026_1_etec.dao.AlternativaDAO(); //puxa alternativa do banco
+                this.alternativasAtuais = altDAO.listarPorPergunta(p.getIdPergunta());//coloca as alternativas em uma lista seguindo o ID da pergunta
+                
+                java.util.Collections.shuffle(this.alternativasAtuais);//Embaralha as alternativas da lista para nunca repetir a ordem das perguntas
+                    jButtonA.setText(alternativasAtuais.get(0).getTexto());
+                    jButtonB.setText(alternativasAtuais.get(1).getTexto());
+                    jButtonC.setText(alternativasAtuais.get(2).getTexto());
+                    jButtonD.setText(alternativasAtuais.get(3).getTexto());
+                
+
+            } catch (java.sql.SQLException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Erro ao carregar alternativas: " + e.getMessage());
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Fim do jogo");//nao sei oq fazer dps disso, voltaria pra tela menu alunos?
+        }
+    }
+
+    private void verificarResposta(Alternativa alternativaClicada) {
+        if (alternativaClicada.isCorreta()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Acertou");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Resposta incorreta");
+        }
+    
+        avancarPergunta();
+    
+}
+private void jButtonAActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    if (alternativasAtuais != null && alternativasAtuais.size() >= 1) {
+        verificarResposta(alternativasAtuais.get(0));//botao A->indice da lista 0 (ta organizado na lista pra ficar igual ja)
+    }
+}
+private void jButtonBActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    if (alternativasAtuais != null && alternativasAtuais.size() >= 2) {
+        verificarResposta(alternativasAtuais.get(1)); //botao A->indice da lista 1 (ta organizado na lista pra ficar igual ja)
+    }
+}                                        
+
+private void jButtonCActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    if (alternativasAtuais != null && alternativasAtuais.size() >= 3) {
+        verificarResposta(alternativasAtuais.get(2)); ////botao C->indice da lista 2 (ta organizado na lista pra ficar igual ja)
+    }
+}                                        
+
+private void jButtonDActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    if (alternativasAtuais != null && alternativasAtuais.size() >= 4) {
+        verificarResposta(alternativasAtuais.get(3)); //botao D->indice da lista 3 (ta organizado na lista pra ficar igual ja) 
+    }
+}
+
+
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -46,6 +120,7 @@ public class TelaQuestao1 extends javax.swing.JFrame {
         jButtonA.setText("Alternativa A");
         jPanel1.add(jButtonA, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 250, 80));
 
+
         jButtonB.setBackground(new java.awt.Color(7, 92, 110));
         jButtonB.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButtonB.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,46 +149,24 @@ public class TelaQuestao1 extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 775, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 775, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonDicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDicaActionPerformed
-       
+
     }//GEN-LAST:event_jButtonDicaActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaQuestao1().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonA;
