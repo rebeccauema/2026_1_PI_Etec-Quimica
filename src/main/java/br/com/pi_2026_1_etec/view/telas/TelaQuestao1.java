@@ -70,6 +70,8 @@ public class TelaQuestao1 extends JFrame {
 
             atualizarBarraProgresso();
 
+            carregarImagemPergunta(p.getIdPergunta());
+
             try {
                 br.com.pi_2026_1_etec.dao.AlternativaDAO altDAO =
                         new br.com.pi_2026_1_etec.dao.AlternativaDAO();
@@ -91,9 +93,43 @@ public class TelaQuestao1 extends JFrame {
                 JOptionPane.showMessageDialog(this, "Erro ao carregar alternativas: " + e.getMessage());
             }
         } else {
+            JOptionPane.showMessageDialog(this, "Fim do jogo");
             new TelaMenuAlunos().setVisible(true);
             this.dispose();
         }
+    }
+
+    private void carregarImagemPergunta(int idPergunta) {
+        String caminho = br.com.pi_2026_1_etec.dao.ImagemDAO.buscarCaminhoImagem(idPergunta);
+
+        if (caminho == null || caminho.isBlank()) {
+            jLabelImagemPergunta.setIcon(null);
+            jLabelImagemPergunta.setText("Sem imagem");
+            return;
+        }
+
+        String caminhoResource = caminho.startsWith("/") ? caminho : "/" + caminho;
+
+        java.net.URL urlImagem = getClass().getResource(caminhoResource);
+
+        if (urlImagem == null) {
+            logger.warning("Imagem não encontrada no classpath: " + caminhoResource);
+            jLabelImagemPergunta.setIcon(null);
+            jLabelImagemPergunta.setText("Imagem não encontrada");
+            return;
+        }
+
+        ImageIcon iconOriginal = new ImageIcon(urlImagem);
+
+        int largura = jLabelImagemPergunta.getWidth() > 0 ? jLabelImagemPergunta.getWidth() : 420;
+        int altura = jLabelImagemPergunta.getHeight() > 0 ? jLabelImagemPergunta.getHeight() : 280;
+
+        java.awt.Image imagemEscalada = iconOriginal.getImage().getScaledInstance(
+                largura, altura, java.awt.Image.SCALE_SMOOTH
+        );
+
+        jLabelImagemPergunta.setIcon(new ImageIcon(imagemEscalada));
+        jLabelImagemPergunta.setText(null);
     }
 
     private String formatarTextoPergunta(String texto) {
