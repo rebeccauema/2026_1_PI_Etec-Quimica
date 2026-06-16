@@ -320,10 +320,10 @@ public class TelaAlterarPergunta extends JFrame {
 
         JPanel painelRadio = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
         painelRadio.setOpaque(false);
-        painelRadio.add(new JLabel("✓") {{
-            setForeground(Color.WHITE);
-            setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        }});
+        JLabel labelCheck = new JLabel("✓");
+        labelCheck.setForeground(Color.WHITE);
+        labelCheck.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        painelRadio.add(labelCheck);
         painelRadio.add(radio);
 
         painel.add(labelLetra, BorderLayout.WEST);
