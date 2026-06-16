@@ -168,14 +168,20 @@ public class TelaQuestao1 extends JFrame {
     }
 
     private void verificarResposta(Alternativa alternativaClicada) {
-        if (alternativaClicada.isCorreta()) {
-            JOptionPane.showMessageDialog(this, "Acertou");
-        } else {
-            JOptionPane.showMessageDialog(this, "Resposta incorreta");
-        }
+    br.com.pi_2026_1_etec.dao.AlunoDAO alunoDAO = new br.com.pi_2026_1_etec.dao.AlunoDAO();
+    
+    int idAluno = br.com.pi_2026_1_etec.model.Sessao.getUsuarioLogado().getId(); 
 
-        avancarPergunta();
+    if (alternativaClicada.isCorreta()) {
+        JOptionPane.showMessageDialog(this, "Acertou!");
+        alunoDAO.registrarResposta(idAluno, true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Resposta incorreta");
+        alunoDAO.registrarResposta(idAluno, false);
     }
+
+    avancarPergunta();
+}
 
     private void avancarPergunta() {
         indiceAtual++;

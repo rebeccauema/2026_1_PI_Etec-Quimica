@@ -1,13 +1,13 @@
 package br.com.pi_2026_1_etec.dao;
 
-import br.com.pi_2026_1_etec.config.ConexaoBD;
-import br.com.pi_2026_1_etec.model.Aluno;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import br.com.pi_2026_1_etec.config.ConexaoBD;
+import br.com.pi_2026_1_etec.model.Aluno;
 
 public class AlunoDAO {
 
@@ -147,6 +147,36 @@ public class AlunoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
+        }
+    }
+
+    public void registrarResposta(int alunoId, boolean acertou) {
+        String sql;
+        if (acertou) {//booleana se aluno acertou==True, atualiza a taxa de acertos do aluno e o numero de questões respondidas. deixando salvo no banco
+            sql = """
+                UPDATE aluno 
+                SET taxa_acertos = ((taxa_acertos * questoes_respondidas) + 100) / (questoes_respondidas + 1),
+                    questoes_respondidas = questoes_respondidas + 1 
+                WHERE pessoa_idpessoa = ?
+            """;
+        } else {
+            sql = """
+                UPDATE aluno 
+                SET taxa_acertos = (taxa_acertos * questoes_respondidas) / (questoes_respondidas + 1),
+                    questoes_respondidas = questoes_respondidas + 1 
+                WHERE pessoa_idpessoa = ?
+            """;
+        }
+
+        try (
+            Connection conn = ConexaoBD.obterConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setInt(1, alunoId);
+            stmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println("Erro ao registrar resposta do aluno: " + e.getMessage());
         }
     }
 }
