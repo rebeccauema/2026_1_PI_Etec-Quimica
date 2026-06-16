@@ -14,6 +14,7 @@ import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -41,7 +43,7 @@ public class TelaAlterarPergunta extends JFrame {
     private JButton jButton1;
     private JButton jButtonRemoverImagem;
     private JButton jButtonVoltar;
-    private JButton jButtonDeletar; // NOVO
+    private JButton jButtonDeletar;
 
     private JComboBox<String> jComboBox1;
     private JComboBox<Object> jComboBox2;
@@ -69,6 +71,12 @@ public class TelaAlterarPergunta extends JFrame {
     private JTextField jTextField4;
     private JTextField jTextFieldEditarPergunta;
 
+    private JRadioButton jRadioA;
+    private JRadioButton jRadioB;
+    private JRadioButton jRadioC;
+    private JRadioButton jRadioD;
+    private ButtonGroup grupoCorreta;
+
     public TelaAlterarPergunta(int idPergunta) {
         this.idPergunta = idPergunta;
 
@@ -84,7 +92,6 @@ public class TelaAlterarPergunta extends JFrame {
 
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        // NOVO: só exibe o botão deletar quando estiver editando uma pergunta existente
         jButtonDeletar.setVisible(idPergunta > 0);
 
         if (idPergunta > 0) {
@@ -149,7 +156,7 @@ public class TelaAlterarPergunta extends JFrame {
         painelSuperior.add(painelEnunciado, BorderLayout.CENTER);
         painelSuperior.add(painelImagem, BorderLayout.EAST);
 
-        jLabel3 = new JLabel("Alternativas");
+        jLabel3 = new JLabel("Alternativas  —  selecione o botão ao lado da resposta correta");
         jLabel3.setFont(new Font("Segoe UI", Font.BOLD, 18));
         jLabel3.setAlignmentX(LEFT_ALIGNMENT);
 
@@ -158,12 +165,24 @@ public class TelaAlterarPergunta extends JFrame {
         jTextField3 = new JTextField();
         jTextField4 = new JTextField();
 
+        grupoCorreta = new ButtonGroup();
+
+        jRadioA = new JRadioButton();
+        jRadioB = new JRadioButton();
+        jRadioC = new JRadioButton();
+        jRadioD = new JRadioButton();
+
+        grupoCorreta.add(jRadioA);
+        grupoCorreta.add(jRadioB);
+        grupoCorreta.add(jRadioC);
+        grupoCorreta.add(jRadioD);
+
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
-        jPanelAlternativaA = criarPainelAlternativa("A", jTextField1);
-        jPanelAlternativaB = criarPainelAlternativa("B", jTextField2);
-        jPanelAlternativaC = criarPainelAlternativa("C", jTextField3);
-        jPanelAlternativaD = criarPainelAlternativa("D", jTextField4);
+        jPanelAlternativaA = criarPainelAlternativa("A", jTextField1, jRadioA);
+        jPanelAlternativaB = criarPainelAlternativa("B", jTextField2, jRadioB);
+        jPanelAlternativaC = criarPainelAlternativa("C", jTextField3, jRadioC);
+        jPanelAlternativaD = criarPainelAlternativa("D", jTextField4, jRadioD);
 
         JPanel painelAlternativas = new JPanel();
         painelAlternativas.setOpaque(false);
@@ -274,7 +293,7 @@ public class TelaAlterarPergunta extends JFrame {
         return jPanel3;
     }
 
-    private JPanel criarPainelAlternativa(String letra, JTextField campoTexto) {
+    private JPanel criarPainelAlternativa(String letra, JTextField campoTexto, JRadioButton radio) {
         JPanel painel = new JPanel(new BorderLayout(8, 0));
         painel.setBackground(corPrincipal);
         painel.setBorder(BorderFactory.createLineBorder(corPrincipal));
@@ -295,18 +314,26 @@ public class TelaAlterarPergunta extends JFrame {
         painelCampo.setBorder(new EmptyBorder(5, 0, 5, 5));
         painelCampo.add(campoTexto, BorderLayout.CENTER);
 
+        radio.setOpaque(false);
+        radio.setToolTipText("Marcar como correta");
+        radio.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JPanel painelRadio = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
+        painelRadio.setOpaque(false);
+        painelRadio.add(new JLabel("✓") {{
+            setForeground(Color.WHITE);
+            setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        }});
+        painelRadio.add(radio);
+
         painel.add(labelLetra, BorderLayout.WEST);
         painel.add(painelCampo, BorderLayout.CENTER);
+        painel.add(painelRadio, BorderLayout.EAST);
 
-        if ("A".equals(letra)) {
-            jLabel4 = labelLetra;
-        } else if ("B".equals(letra)) {
-            jLabel5 = labelLetra;
-        } else if ("C".equals(letra)) {
-            jLabel6 = labelLetra;
-        } else if ("D".equals(letra)) {
-            jLabel7 = labelLetra;
-        }
+        if ("A".equals(letra)) jLabel4 = labelLetra;
+        else if ("B".equals(letra)) jLabel5 = labelLetra;
+        else if ("C".equals(letra)) jLabel6 = labelLetra;
+        else if ("D".equals(letra)) jLabel7 = labelLetra;
 
         return painel;
     }
@@ -326,7 +353,6 @@ public class TelaAlterarPergunta extends JFrame {
         jButton1.setFont(new Font("Segoe UI", Font.BOLD, 12));
         jButton1.setPreferredSize(new Dimension(170, 32));
 
-        // NOVO: botão deletar
         jButtonDeletar = new JButton("Deletar pergunta");
         jButtonDeletar.setBackground(new Color(180, 0, 0));
         jButtonDeletar.setForeground(Color.WHITE);
@@ -340,13 +366,21 @@ public class TelaAlterarPergunta extends JFrame {
 
         JPanel painelSalvar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         painelSalvar.setOpaque(false);
-        painelSalvar.add(jButtonDeletar); // NOVO
+        painelSalvar.add(jButtonDeletar);
         painelSalvar.add(jButton1);
 
         painelRodape.add(painelDificuldade, BorderLayout.WEST);
         painelRodape.add(painelSalvar, BorderLayout.EAST);
 
         return painelRodape;
+    }
+
+    private int getIndiceCorreta() {
+        if (jRadioA.isSelected()) return 0;
+        if (jRadioB.isSelected()) return 1;
+        if (jRadioC.isSelected()) return 2;
+        if (jRadioD.isSelected()) return 3;
+        return -1;
     }
 
     private void carregarMateriaisNoCombobox() {
@@ -358,7 +392,6 @@ public class TelaAlterarPergunta extends JFrame {
 
         try {
             conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
-
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
 
@@ -368,21 +401,14 @@ public class TelaAlterarPergunta extends JFrame {
                 int id = rs.getInt("id_material");
                 String nome = rs.getString("nome");
                 String caminho = rs.getString("caminho_imagem");
-
-                Material mat = new Material(id, nome, caminho);
-
-                jComboBox2.addItem(mat);
+                jComboBox2.addItem(new Material(id, nome, caminho));
             }
         } catch (Exception e) {
             System.out.println("Erro crítico ao carregar materiais: " + e.getMessage());
         } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                System.out.println("Erro ao fechar conexões: " + e.getMessage());
-            }
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (ps != null) ps.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
 
@@ -415,40 +441,34 @@ public class TelaAlterarPergunta extends JFrame {
             ps.close();
 
             ps = conn.prepareStatement(
-                    "SELECT texto FROM alternativa WHERE id_pergunta = ? ORDER BY id_alternativa"
+                    "SELECT texto, correta FROM alternativa WHERE id_pergunta = ? ORDER BY id_alternativa"
             );
             ps.setInt(1, idPergunta);
             rs = ps.executeQuery();
 
             JTextField[] campos = {jTextField1, jTextField2, jTextField3, jTextField4};
+            JRadioButton[] radios = {jRadioA, jRadioB, jRadioC, jRadioD};
             int i = 0;
             while (rs.next() && i < 4) {
                 campos[i].setText(rs.getString("texto"));
+                if (rs.getInt("correta") == 1) {
+                    radios[i].setSelected(true);
+                }
                 i++;
             }
 
         } catch (Exception e) {
             System.out.println("Erro ao carregar dados da pergunta: " + e.getMessage());
         } finally {
-            try {
-                if (rs != null) rs.close();
-            } catch (Exception e) {
-            }
-            try {
-                if (ps != null) ps.close();
-            } catch (Exception e) {
-            }
-            try {
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-            }
+            try { if (rs != null) rs.close(); } catch (Exception e) {}
+            try { if (ps != null) ps.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
 
     private void selecionarMaterialNoCombo(int idMaterial) {
         for (int i = 0; i < jComboBox2.getItemCount(); i++) {
             Object item = jComboBox2.getItemAt(i);
-
             if (item instanceof Material material) {
                 if (material.getId() == idMaterial) {
                     jComboBox2.setSelectedIndex(i);
@@ -458,13 +478,9 @@ public class TelaAlterarPergunta extends JFrame {
         }
     }
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Mantido para preservar função existente.
-    }
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Mantido para preservar função existente.
-    }
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {}
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {}
+    private void jTextFieldEditarPerguntaActionPerformed(java.awt.event.ActionEvent evt) {}
 
     private void jButtonRemoverImagemActionPerformed(java.awt.event.ActionEvent evt) {
         jComboBox2.setSelectedIndex(-1);
@@ -486,12 +502,8 @@ public class TelaAlterarPergunta extends JFrame {
             return;
         }
 
-        if (itemSelecionado instanceof Material) {
-            Material material = (Material) itemSelecionado;
-
+        if (itemSelecionado instanceof Material material) {
             String caminhoDaImagem = material.getCaminhoImagem();
-
-            System.out.println("Caminho que veio do banco: " + caminhoDaImagem);
 
             if (caminhoDaImagem != null && !caminhoDaImagem.isEmpty()) {
                 try {
@@ -506,9 +518,7 @@ public class TelaAlterarPergunta extends JFrame {
                     if (altura <= 0) altura = 78;
 
                     Image imgRedimensionada = icone.getImage().getScaledInstance(
-                            largura,
-                            altura,
-                            Image.SCALE_SMOOTH
+                            largura, altura, Image.SCALE_SMOOTH
                     );
 
                     jLabelImagem.setIcon(new ImageIcon(imgRedimensionada));
@@ -524,10 +534,6 @@ public class TelaAlterarPergunta extends JFrame {
         }
     }
 
-    private void jTextFieldEditarPerguntaActionPerformed(java.awt.event.ActionEvent evt) {
-        // Mantido para preservar função existente.
-    }
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         String enunciado = jTextFieldEditarPergunta.getText().trim();
         String altA = jTextField1.getText().trim();
@@ -537,12 +543,12 @@ public class TelaAlterarPergunta extends JFrame {
         String dificuldade = jComboBox1.getSelectedItem().toString();
 
         if (enunciado.isEmpty() || dificuldade.equals("Dificuldade")) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Preencha o enunciado e a dificuldade.",
-                    "Atenção",
-                    JOptionPane.WARNING_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Preencha o enunciado e a dificuldade.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (getIndiceCorreta() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione qual é a alternativa correta.", "Atenção", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -550,20 +556,13 @@ public class TelaAlterarPergunta extends JFrame {
             try {
                 salvarNovaPergunta(enunciado, altA, altB, altC, altD, dificuldade);
             } catch (java.sql.SQLException e) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Erro ao salvar: " + e.getMessage(),
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
+                JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             atualizarPergunta(enunciado, altA, altB, altC, altD, dificuldade);
         }
     }
 
-    // NOVO: handler do botão deletar
     private void jButtonDeletarActionPerformed(java.awt.event.ActionEvent evt) {
         int confirmacao = JOptionPane.showConfirmDialog(
                 this,
@@ -573,49 +572,30 @@ public class TelaAlterarPergunta extends JFrame {
                 JOptionPane.WARNING_MESSAGE
         );
 
-        if (confirmacao != JOptionPane.YES_OPTION) {
-            return;
-        }
+        if (confirmacao != JOptionPane.YES_OPTION) return;
 
-        String sqlDeleteAlternativas = "DELETE FROM alternativa WHERE id_pergunta = ?";
-        String sqlDeletePergunta     = "DELETE FROM pergunta WHERE id_pergunta = ?";
-
-        try (java.sql.Connection conn =
-                     br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
-
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
             conn.setAutoCommit(false);
 
-            // 1º apaga as alternativas (FK) antes de apagar a pergunta
-            try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlDeleteAlternativas)) {
+            try (java.sql.PreparedStatement ps = conn.prepareStatement("DELETE FROM alternativa WHERE id_pergunta = ?")) {
                 ps.setInt(1, idPergunta);
                 ps.executeUpdate();
             }
 
-            // 2º apaga a pergunta
-            try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlDeletePergunta)) {
+            try (java.sql.PreparedStatement ps = conn.prepareStatement("DELETE FROM pergunta WHERE id_pergunta = ?")) {
                 ps.setInt(1, idPergunta);
                 ps.executeUpdate();
             }
 
             conn.commit();
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Pergunta deletada com sucesso!",
-                    "Sucesso",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Pergunta deletada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
             new TelaGerenciamentoDePergunta().setVisible(true);
             this.dispose();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Erro ao deletar: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Erro ao deletar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -627,20 +607,14 @@ public class TelaAlterarPergunta extends JFrame {
         String sqlAlternativa =
                 "INSERT INTO alternativa (id_alternativa, texto, correta, errada, id_imagem, id_pergunta) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (java.sql.Connection conn =
-                     br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
-
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
             conn.setAutoCommit(false);
 
             int novoId = obterProximoIdPergunta(conn);
             Integer idNivel = obterIdNivelPorDificuldade(dificuldade);
-            if (idNivel == null) {
-                throw new java.sql.SQLException("Nível não encontrado: " + dificuldade);
-            }
+            if (idNivel == null) throw new java.sql.SQLException("Nível não encontrado: " + dificuldade);
 
-            try (java.sql.PreparedStatement ps =
-                         conn.prepareStatement(sqlPergunta)) {
-
+            try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlPergunta)) {
                 ps.setInt(1, novoId);
                 ps.setString(2, enunciado);
                 ps.setNull(3, java.sql.Types.INTEGER);
@@ -658,26 +632,19 @@ public class TelaAlterarPergunta extends JFrame {
                 ps.setInt(6, idNivel);
                 ps.setNull(7, java.sql.Types.INTEGER);
                 ps.setString(8, "Múltipla escolha");
-
                 ps.executeUpdate();
             }
 
-            String[][] alternativas = {
-                    {"A", altA},
-                    {"B", altB},
-                    {"C", altC},
-                    {"D", altD}
-            };
-
+            String[] textos = {altA, altB, altC, altD};
+            int indiceCorreta = getIndiceCorreta();
             int altId = obterProximoIdAlternativa(conn);
-            try (java.sql.PreparedStatement ps =
-                         conn.prepareStatement(sqlAlternativa)) {
 
-                for (String[] alt : alternativas) {
+            try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlAlternativa)) {
+                for (int i = 0; i < textos.length; i++) {
                     ps.setInt(1, altId++);
-                    ps.setString(2, alt[1]);
-                    ps.setInt(3, 0);
-                    ps.setInt(4, 0);
+                    ps.setString(2, textos[i]);
+                    ps.setInt(3, i == indiceCorreta ? 1 : 0);
+                    ps.setInt(4, i == indiceCorreta ? 0 : 1);
                     ps.setNull(5, java.sql.Types.INTEGER);
                     ps.setInt(6, novoId);
                     ps.addBatch();
@@ -687,99 +654,13 @@ public class TelaAlterarPergunta extends JFrame {
 
             conn.commit();
 
-            JOptionPane.showMessageDialog(
-                    this, "Pergunta adicionada com sucesso!"
-            );
-
+            JOptionPane.showMessageDialog(this, "Pergunta adicionada com sucesso!");
             new TelaGerenciamentoDePergunta().setVisible(true);
             this.dispose();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Erro ao salvar: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private Integer obterIdNivelPorDificuldade(String dificuldade) throws java.sql.SQLException {
-        String sql = "SELECT id_nivel FROM nivel WHERE nome = ?";
-        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
-             java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, dificuldade);
-            try (java.sql.ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("id_nivel");
-                }
-            }
-        }
-        return null;
-    }
-
-    private Integer obterIdTemaPorNome(String nome) throws java.sql.SQLException {
-        String sql = "SELECT id_tema FROM tema WHERE nome = ?";
-        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
-             java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, nome);
-            try (java.sql.ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("id_tema");
-                }
-            }
-        }
-        return null;
-    }
-
-    private Integer obterPrimeiroIdTema() throws java.sql.SQLException {
-        String sql = "SELECT id_tema FROM tema LIMIT 1";
-        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
-             java.sql.PreparedStatement ps = conn.prepareStatement(sql);
-             java.sql.ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt("id_tema");
-            }
-        }
-        return null;
-    }
-
-    private Integer obterIdTemaPadrao(String nomePreferido) {
-        try {
-            Integer idTema = obterIdTemaPorNome(nomePreferido);
-            if (idTema != null) {
-                return idTema;
-            }
-            idTema = obterPrimeiroIdTema();
-            if (idTema != null) {
-                return idTema;
-            }
-        } catch (java.sql.SQLException e) {
-            System.out.println("Não foi possível buscar id_tema: " + e.getMessage());
-        }
-        return 1;
-    }
-
-    private int obterProximoIdPergunta(java.sql.Connection conn) throws java.sql.SQLException {
-        String sql = "SELECT COALESCE(MAX(id_pergunta), 0) + 1 AS proximo_id FROM pergunta";
-        try (java.sql.PreparedStatement ps = conn.prepareStatement(sql);
-             java.sql.ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt("proximo_id");
-            }
-        }
-        return 1;
-    }
-
-    private int obterProximoIdAlternativa(java.sql.Connection conn) throws java.sql.SQLException {
-        String sql = "SELECT COALESCE(MAX(id_alternativa), 0) + 1 AS proximo_id FROM alternativa";
-        try (java.sql.PreparedStatement ps = conn.prepareStatement(sql);
-             java.sql.ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt("proximo_id");
-            }
-        }
-        return 1;
     }
 
     private void atualizarPergunta(String enunciado, String altA, String altB,
@@ -787,19 +668,14 @@ public class TelaAlterarPergunta extends JFrame {
 
         String sqlPergunta =
                 "UPDATE pergunta SET texto = ?, id_imagem = ?, id_tema = ?, id_material = ?, id_nivel = ?, id_sistema = ?, tipo_pergunta = ? WHERE id_pergunta = ?";
-        String sqlAlternativaDelete =
-                "DELETE FROM alternativa WHERE id_pergunta = ?";
+        String sqlAlternativaDelete = "DELETE FROM alternativa WHERE id_pergunta = ?";
         String sqlAlternativa =
                 "INSERT INTO alternativa (id_alternativa, texto, correta, errada, id_imagem, id_pergunta) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (java.sql.Connection conn =
-                     br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
-
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao()) {
             conn.setAutoCommit(false);
 
-            try (java.sql.PreparedStatement ps =
-                         conn.prepareStatement(sqlPergunta)) {
-
+            try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlPergunta)) {
                 ps.setString(1, enunciado);
                 ps.setNull(2, java.sql.Types.INTEGER);
 
@@ -814,40 +690,30 @@ public class TelaAlterarPergunta extends JFrame {
                 }
 
                 Integer idNivel = obterIdNivelPorDificuldade(dificuldade);
-                if (idNivel == null) {
-                    throw new java.sql.SQLException("Nível não encontrado: " + dificuldade);
-                }
+                if (idNivel == null) throw new java.sql.SQLException("Nível não encontrado: " + dificuldade);
 
                 ps.setInt(5, idNivel);
                 ps.setNull(6, java.sql.Types.INTEGER);
                 ps.setString(7, "Múltipla escolha");
-
                 ps.setInt(8, idPergunta);
                 ps.executeUpdate();
             }
 
-            String[][] alternativas = {
-                    {"A", altA},
-                    {"B", altB},
-                    {"C", altC},
-                    {"D", altD}
-            };
-
-            try (java.sql.PreparedStatement ps =
-                         conn.prepareStatement(sqlAlternativaDelete)) {
+            try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlAlternativaDelete)) {
                 ps.setInt(1, idPergunta);
                 ps.executeUpdate();
             }
 
+            String[] textos = {altA, altB, altC, altD};
+            int indiceCorreta = getIndiceCorreta();
             int altId = obterProximoIdAlternativa(conn);
-            try (java.sql.PreparedStatement ps =
-                         conn.prepareStatement(sqlAlternativa)) {
 
-                for (String[] alt : alternativas) {
+            try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlAlternativa)) {
+                for (int i = 0; i < textos.length; i++) {
                     ps.setInt(1, altId++);
-                    ps.setString(2, alt[1]);
-                    ps.setInt(3, 0);
-                    ps.setInt(4, 0);
+                    ps.setString(2, textos[i]);
+                    ps.setInt(3, i == indiceCorreta ? 1 : 0);
+                    ps.setInt(4, i == indiceCorreta ? 0 : 1);
                     ps.setNull(5, java.sql.Types.INTEGER);
                     ps.setInt(6, idPergunta);
                     ps.addBatch();
@@ -857,21 +723,77 @@ public class TelaAlterarPergunta extends JFrame {
 
             conn.commit();
 
-            JOptionPane.showMessageDialog(
-                    this, "Pergunta atualizada com sucesso!"
-            );
-
+            JOptionPane.showMessageDialog(this, "Pergunta atualizada com sucesso!");
             new TelaGerenciamentoDePergunta().setVisible(true);
             this.dispose();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Erro ao atualizar: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private Integer obterIdNivelPorDificuldade(String dificuldade) throws java.sql.SQLException {
+        String sql = "SELECT id_nivel FROM nivel WHERE nome = ?";
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+             java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, dificuldade);
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("id_nivel");
+            }
+        }
+        return null;
+    }
+
+    private Integer obterIdTemaPorNome(String nome) throws java.sql.SQLException {
+        String sql = "SELECT id_tema FROM tema WHERE nome = ?";
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+             java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nome);
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("id_tema");
+            }
+        }
+        return null;
+    }
+
+    private Integer obterPrimeiroIdTema() throws java.sql.SQLException {
+        String sql = "SELECT id_tema FROM tema LIMIT 1";
+        try (java.sql.Connection conn = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+             java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+             java.sql.ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt("id_tema");
+        }
+        return null;
+    }
+
+    private Integer obterIdTemaPadrao(String nomePreferido) {
+        try {
+            Integer idTema = obterIdTemaPorNome(nomePreferido);
+            if (idTema != null) return idTema;
+            idTema = obterPrimeiroIdTema();
+            if (idTema != null) return idTema;
+        } catch (java.sql.SQLException e) {
+            System.out.println("Não foi possível buscar id_tema: " + e.getMessage());
+        }
+        return 1;
+    }
+
+    private int obterProximoIdPergunta(java.sql.Connection conn) throws java.sql.SQLException {
+        String sql = "SELECT COALESCE(MAX(id_pergunta), 0) + 1 AS proximo_id FROM pergunta";
+        try (java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+             java.sql.ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt("proximo_id");
+        }
+        return 1;
+    }
+
+    private int obterProximoIdAlternativa(java.sql.Connection conn) throws java.sql.SQLException {
+        String sql = "SELECT COALESCE(MAX(id_alternativa), 0) + 1 AS proximo_id FROM alternativa";
+        try (java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+             java.sql.ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt("proximo_id");
+        }
+        return 1;
     }
 
     public static void main(String[] args) {
@@ -886,9 +808,6 @@ public class TelaAlterarPergunta extends JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> {
-            TelaAlterarPergunta tela = new TelaAlterarPergunta(1);
-            tela.setVisible(true);
-        });
+        java.awt.EventQueue.invokeLater(() -> new TelaAlterarPergunta(1).setVisible(true));
     }
 }
