@@ -1,8 +1,5 @@
 package br.com.pi_2026_1_etec.view.telas;
 
-import br.com.pi_2026_1_etec.dao.AlunoDAO;
-import br.com.pi_2026_1_etec.model.Aluno;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -25,6 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import br.com.pi_2026_1_etec.dao.AlunoDAO;
+import br.com.pi_2026_1_etec.model.Aluno;
 
 public class TelaGerenciarAlunos extends JFrame {
 
@@ -258,24 +258,46 @@ public class TelaGerenciarAlunos extends JFrame {
         return label;
     }
 
-    private void configurarCard(JPanel painel, JLabel label) {
-        painel.removeAll();
-        painel.setBackground(corFundoClaro);
-        painel.setBorder(BorderFactory.createLineBorder(corPrincipal));
-        painel.setLayout(new BorderLayout());
+    private void mostrarDetalhesAluno(Aluno aluno) {
+    if (aluno == null) return;
 
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setVerticalAlignment(SwingConstants.CENTER);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+    // 1. Atualiza o cabeçalho com o nome do aluno selecionado
+    jLabelNomeAluno.setText(aluno.getNome());
 
-        painel.add(label, BorderLayout.CENTER);
-        painel.setPreferredSize(new Dimension(180, 90));
-        painel.setMinimumSize(new Dimension(150, 90));
-        painel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+    // 2. Recria os textos das JLabels com os dados numéricos corretos do objeto Aluno
+    jLabelPerguntas.setText("Perguntas: " + aluno.getQuestoesRespondidas());
+    jLabelAcertos.setText("Acertos: " + aluno.getTaxaAcertos());
+    jLabelErros.setText("Erros: " + aluno.getErros());
 
-        painel.revalidate();
-        painel.repaint();
-    }
+    // 3. Força os painéis/cards a limparem o texto antigo e desenharem o novo
+    configurarCard(jPanelTotalPerguntas, jLabelPerguntas);
+    configurarCard(jPanelAcertos, jLabelAcertos);
+    configurarCard(jPanelErros, jLabelErros);
+}
+
+private void configurarCard(JPanel painel, JLabel label) {
+    // Limpa o estado antigo do painel para evitar duplicidade ou travamento visual
+    painel.removeAll();
+    
+    painel.setBackground(corFundoClaro);
+    painel.setBorder(BorderFactory.createLineBorder(corPrincipal));
+    painel.setLayout(new BorderLayout());
+
+    // Alinha o texto perfeitamente no centro do Card
+    label.setHorizontalAlignment(SwingConstants.CENTER);
+    label.setVerticalAlignment(SwingConstants.CENTER);
+    label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+
+    // Coloca a label atualizada de volta no container
+    painel.add(label, BorderLayout.CENTER);
+    painel.setPreferredSize(new Dimension(180, 90));
+    painel.setMinimumSize(new Dimension(150, 90));
+    painel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+
+    // Força o gerenciador de layout do Swing a redesenhar o componente na hora
+    painel.revalidate();
+    painel.repaint();
+}
 
     private void configurarBusca() {
         jButton1.addActionListener(e -> buscarAlunos(jTextField1.getText()));
@@ -356,25 +378,6 @@ public class TelaGerenciarAlunos extends JFrame {
 
         jPanelListaDeAlunos.revalidate();
         jPanelListaDeAlunos.repaint();
-    }
-
-    private void mostrarDetalhesAluno(Aluno aluno) {
-        jLabelNomeAluno.setText(aluno.getNome());
-
-        int perguntas = aluno.getQuestoesRespondidas();
-        int acertos = aluno.getTaxaAcertos();
-        int erros = aluno.getErros();
-
-        jLabelPerguntas.setText("Perguntas: " + perguntas);
-        jLabelAcertos.setText("Acertos: " + acertos);
-        jLabelErros.setText("Erros: " + erros);
-
-        jPanelTotalPerguntas.revalidate();
-        jPanelTotalPerguntas.repaint();
-        jPanelAcertos.revalidate();
-        jPanelAcertos.repaint();
-        jPanelErros.revalidate();
-        jPanelErros.repaint();
     }
 
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {

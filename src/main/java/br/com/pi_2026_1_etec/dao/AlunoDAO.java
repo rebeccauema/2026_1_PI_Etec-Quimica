@@ -11,40 +11,55 @@ import br.com.pi_2026_1_etec.model.Aluno;
 
 public class AlunoDAO {
 
-    public ArrayList<Aluno> listarAlunos() {
-        ArrayList<Aluno> alunos = new ArrayList<>();
 
-        String sql = """
-            SELECT
-                p.idpessoa,
-                p.nome,
-                p.senha,
-                a.email,
-                a.questoes_respondidas,
-                a.taxa_acertos,
-                a.professor_email,
-                a.pessoa_idpessoa
-            FROM aluno a
-            INNER JOIN pessoa p ON a.pessoa_idpessoa = p.idpessoa
-            ORDER BY p.nome
-        """;
+    
+public ArrayList<Aluno> listarAlunos() {
+    ArrayList<Aluno> lista = new ArrayList<>();
+    String sql = "SELECT p.nome, a.email, a.questoes_respondidas, a.taxa_acertos, a.pessoa_idpessoa "
+               + "FROM aluno a "
+               + "LEFT JOIN pessoa p ON a.pessoa_idpessoa = p.idpessoa"; 
 
-        try (
-            Connection conn = ConexaoBD.obterConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()
-        ) {
-            while (rs.next()) {
-                Aluno aluno = montarAluno(rs);
-                alunos.add(aluno);
-            }
+    try (java.sql.Connection con = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+         java.sql.PreparedStatement ps = con.prepareStatement(sql);
+         java.sql.ResultSet rs = ps.executeQuery()) {
 
-        } catch (SQLException e) {
-            System.out.println("Erro ao listar alunos: " + e.getMessage());
+        while (rs.next()) {
+            Aluno aluno = new Aluno();
+            
+            // Define o nome vindo da tabela Pessoa e o email do Aluno
+            aluno.setNome(rs.getString("nome"));
+            aluno.setEmail(rs.getString("email"));
+            int respondidas = rs.getInt("questoes_respondidas");
+            int acertos = rs.getInt("taxa_acertos"); 
+            aluno.setQuestoesRespondidas(respondidas);
+            aluno.setTaxaAcertos(acertos);
+            aluno.setErros(respondidas - acertos);//atb de erro é local, então pode so fzr uma sub do acerto menos as repsondidas.
+            lista.add(aluno);
         }
-
-        return alunos;
+        
+    } catch (java.sql.SQLException e) {
+        System.out.println("ERRO AO CARREGAR ALUNOS: " + e.getMessage());
+        e.printStackTrace();
     }
+    
+    return lista;
+}
+// Método auxiliar simples para buscar o nome do aluno sem quebrar a query principal
+private String buscarNomePorIdPessoa(java.sql.Connection con, int idPessoa) {
+    String sql = "SELECT nome FROM pessoa WHERE idpessoa = ?"; // Ajuste "idpessoa" se no seu banco for "id"
+    try (java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idPessoa);
+        try (java.sql.ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getString("nome");
+            }
+        }
+    } catch (java.sql.SQLException e) {
+        System.out.println("Erro ao buscar nome: " + e.getMessage());
+    }
+    return null;
+}
+    
 
     public ArrayList<Aluno> buscarAlunos(String textoBusca) {
         ArrayList<Aluno> alunos = new ArrayList<>();
@@ -150,33 +165,41 @@ public class AlunoDAO {
         }
     }
 
-    public void registrarResposta(int alunoId, boolean acertou) {
-        String sql;
-        if (acertou) {//booleana se aluno acertou==True, atualiza a taxa de acertos do aluno e o numero de questões respondidas. deixando salvo no banco
-            sql = """
-                UPDATE aluno 
-                SET taxa_acertos = ((taxa_acertos * questoes_respondidas) + 100) / (questoes_respondidas + 1),
-                    questoes_respondidas = questoes_respondidas + 1 
-                WHERE pessoa_idpessoa = ?
-            """;
-        } else {
-            sql = """
-                UPDATE aluno 
-                SET taxa_acertos = (taxa_acertos * questoes_respondidas) / (questoes_respondidas + 1),
-                    questoes_respondidas = questoes_respondidas + 1 
-                WHERE pessoa_idpessoa = ?
-            """;
-        }
+public void registrarResposta(int idPessoa, boolean acertou) {
+    // COALESCE evita que o valor suma caso o banco esteja como NULL
+    String sql = "UPDATE aluno SET "
+               + " questoes_respondidas = COALESCE(questoes_respondidas, 0) + 1, "
+               + " taxa_acertos = COALESCE(taxa_acertos, 0) + " + (acertou ? "1" : "0")
+               + " WHERE pessoa_idpessoa = ?";
 
-        try (
-            Connection conn = ConexaoBD.obterConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
-            stmt.setInt(1, alunoId);
-            stmt.executeUpdate();
-            
-        } catch (SQLException e) {
-            System.out.println("Erro ao registrar resposta do aluno: " + e.getMessage());
-        }
+    try (java.sql.Connection con = br.com.pi_2026_1_etec.config.ConexaoBD.obterConexao();
+         java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        ps.setInt(1, idPessoa);
+        ps.executeUpdate();
+        
+    } catch (java.sql.SQLException e) {
+        System.out.println("Erro ao registrar resposta: " + e.getMessage());
     }
+}
+
+    public double obterTaxaAcertoGeral() {
+    String sql = "SELECT SUM(respostas_corretas) as corretas, SUM(perguntas_respondidas) as totais FROM aluno";//puxa acertos e total respondido do db
+    try (Connection con = ConexaoBD.obterConexao();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int totais = rs.getInt("totais");
+            int corretas = rs.getInt("corretas");
+            
+            if (totais > 0) {//evita divisao por 0
+                return ((double) corretas / totais) * 100;
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Erro ao calcular taxa de acerto geral: " + e.getMessage());
+    }
+    return 0.0;
+}
 }

@@ -6,9 +6,19 @@ public class Aluno extends Usuario {
     private int taxaAcertos;
     private String professorEmail;
     private int pessoaIdPessoa;
+    private int erros;
+
 
     public int getQuestoesRespondidas() {
         return questoesRespondidas;
+    }
+
+    public int getErros() {
+        return this.erros;
+    }
+
+    public void setErros(int erros) {
+        this.erros = erros;
     }
 
     public void setQuestoesRespondidas(int questoesRespondidas) {
@@ -37,15 +47,5 @@ public class Aluno extends Usuario {
 
     public void setPessoaIdPessoa(int pessoaIdPessoa) {
         this.pessoaIdPessoa = pessoaIdPessoa;
-    }
-
-    public int getErros() {
-        int erros = questoesRespondidas - taxaAcertos;
-
-        if (erros < 0) {
-            return 0;
-        }
-
-        return erros;
     }
 }
